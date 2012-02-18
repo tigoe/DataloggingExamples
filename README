@@ -5,4 +5,4 @@ There are several ways to save data from a sensor attached to an Arduino.  If yo
 * Saving data to an SD card mounted on the Arduino
 * HTTP upload to pachube.com via an Ethernet shield or Ethernet Arduino.
 
-For a full tutorial see http://tigoe.net/pcomp/code/
+For a full tutorial see http://www.tigoe.net/pcomp/code/?p=1043

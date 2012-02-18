@@ -55,8 +55,8 @@ long lastConnectionTime = 0;        // last time you connected to the server, in
 boolean lastConnected = false;      // state of the connection last time through the main loop
 const int postingInterval = 10*1000;  //delay between updates to Pachube.com
 
-char apiKey[] = "yGVHcYA9ehDVFFLjZ7oZCVA7yBqSAKx4dDMvbTFIdUJTaz0g";
-long feed = 47736;
+char apiKey[] = "FILL_IN_YOUR_API_KEY_HERE";
+long feed = 00000;      // fill in your feed number here
 
 void setup() {
   Serial.begin(9600); 

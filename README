@@ -1,0 +1,8 @@
+There are several ways to save data from a sensor attached to an Arduino.  If you're connected to a personal computer, you can simply send the data from the Arduino to the personal computer serially, and save it to a file.  If you've got an SD card attached to the microcontroller, you can save the data to the card. Or, if you have access to the internet and a device that can connect to a server, you can save the data to a server. In these, you'll read a DHT11 temperature and humidity sensor and log data in three ways:
+
+
+* Serial transmission to a personal computer, and serial capture to a file.
+* Saving data to an SD card mounted on the Arduino
+* HTTP upload to pachube.com via an Ethernet shield or Ethernet Arduino.
+
+For a full tutorial see http://tigoe.net/pcomp/code/

@@ -3,6 +3,8 @@
   This sketch reads the battery level and analog input A0
   on an Adalogger and saves their values to a comma-separated values (CSV) file.
 
+  Written and tested on an Adalogger 32U4 board
+  .
   created 22 Jan 2016
   by Tom Igoe
 
@@ -21,12 +23,12 @@ char fileName[] = "datalog.csv";  // filename to save on SD card
 
 void setup() {
   Serial.begin(9600);
-  
+
   // initialize LED pins:
   pinMode(writeLed, OUTPUT);
   pinMode(errorLed, OUTPUT);
 
-// check to see that the SD card is responding:
+  // check to see that the SD card is responding:
   if (!SD.begin(chipSelect)) {      // if not,
     digitalWrite(errorLed, HIGH);   // turn on error LED
     Serial.println("Card failed, or not present");
@@ -35,17 +37,17 @@ void setup() {
   }
   // if the card initialized successfully
   Serial.println("card initialized.");
-  
-// add header columns to file:
+
+  // add header columns to file:
   saveToFile("Battery Voltage,Sensor Reading");
 }
 
 void loop() {
-// read sensors every 10 seconds
+  // read sensors every 10 seconds
   if (millis()  - lastWriteTime >=  interval) {
     // read battery voltage:
     float batteryVoltage = analogRead(batteryPin);
-    // voltage is halved by the on-board voltage divider, 
+    // voltage is halved by the on-board voltage divider,
     // so real voltage is * 2:
     batteryVoltage =  batteryVoltage * 2;
     // multiply by reference voltage (3.3) and divide by analog resolution:
@@ -56,13 +58,13 @@ void loop() {
     sensorVoltage = (sensorVoltage * 3.3) / 1024;
 
     // make a string to print to the data file and save it:
-    String reading = String(batteryVoltage); 
-    reading += ",";          
+    String reading = String(batteryVoltage);
+    reading += ",";
     reading += sensorVoltage;
     saveToFile(reading);
- 
+
     // update the last attempted save time:
-    lastWriteTime = millis(); 
+    lastWriteTime = millis();
   }
 }
 

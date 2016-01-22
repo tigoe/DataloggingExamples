@@ -1,7 +1,9 @@
 /*
-  Battery and analog input logger
-  This sketch reads the battery level and analog input A0
+  Step logger
+  This sketch reads the battery level and an LIS3DH accelerometer
   on an Adalogger and saves their values to a comma-separated values (CSV) file.
+  The step counter is crudely implemented using the accelerometer's tap
+  detector.
 
   Written and tested on an Adalogger 32U4 board
   .
@@ -12,6 +14,18 @@
 
 #include <SPI.h>
 #include <SD.h>
+
+#include <Wire.h>
+#include <Adafruit_LIS3DH.h>
+
+Adafruit_LIS3DH accelerometer = Adafruit_LIS3DH();
+// Adjust this number for the sensitivity of the 'click' force
+// this strongly depend on the range! for 16G, try 5-10
+// for 8G, try 10-20. for 4G try 20-40. for 2G try 40-80
+#define CLICKTHRESHHOLD 40
+
+long steps = 0;                   // step count. reset every card write
+int minStepInterval = 50;         // min time between steps, in ms
 
 const int batteryPin = A9;        // battery volotage is on pin A9
 const int chipSelect = 4;         // SPI chip select for SD card
@@ -38,30 +52,39 @@ void setup() {
   // if the card initialized successfully
   Serial.println("card initialized.");
 
+  if (! accelerometer.begin(0x18)) {
+    Serial.println("Couldn't start. Check wiring.");
+    while (true);     // stop here and do nothing
+  }
+
+  accelerometer.setRange(LIS3DH_RANGE_2_G);
+
+  // 1 = single click only interrupt output
+  accelerometer.setClick(1, CLICKTHRESHHOLD);
+  delay(100);
+
   // add header columns to file:
-  saveToFile("Battery Voltage,Sensor Reading");
+  saveToFile("Steps");
 }
 
 void loop() {
-  // read sensors every 10 seconds
+  // read for clicks every 50 ms:
+  byte click = accelerometer.getClick();
+  if (click > 0) {
+    steps++;
+    Serial.println(steps);
+  }
+
+  delay(minStepInterval);
+
+  // write to SD card every 10 seconds
   if (millis()  - lastWriteTime >=  interval) {
-    // read battery voltage:
-    float batteryVoltage = analogRead(batteryPin);
-    // voltage is halved by the on-board voltage divider,
-    // so real voltage is * 2:
-    batteryVoltage =  batteryVoltage * 2;
-    // multiply by reference voltage (3.3) and divide by analog resolution:
-    batteryVoltage = (batteryVoltage * 3.3) / 1024;
-
-    // sensor input pin is 0 - 3.3V. Read and convert:
-    float sensorVoltage = analogRead(A0);
-    sensorVoltage = (sensorVoltage * 3.3) / 1024;
-
     // make a string to print to the data file and save it:
-    String reading = String(batteryVoltage);
-    reading += ",";
-    reading += sensorVoltage;
-    saveToFile(reading);
+    String reading = String(steps);
+    // if you successfully saved, reset the step counter:
+    if (saveToFile(reading)) {
+      steps = 0;
+    }
 
     // update the last attempted save time:
     lastWriteTime = millis();

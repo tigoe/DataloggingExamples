@@ -42,12 +42,12 @@ void loop() {
 
 float convertReading(int reading) {
   /*
-   * This is a bit of a hack. Accelerometer values are
-   * returned in 2's complement. at 2G range, 1 digit = 1mg. 
-   * at 16G range, 1 digit = 12mg/digit. So this formula
-   * converts from 2's complement to decimal, and adjusts
-   * for the ranges.
-   */
+     This is a bit of a hack. Accelerometer values are
+     returned in 2's complement. at 2G range, 1 digit = 1mg.
+     at 16G range, 1 digit = 12mg/digit. So this formula
+     converts from 2's complement to decimal, and adjusts
+     for the ranges.
+  */
   float divisor = 2 << (13 - accelerometer.getRange());
   float acceleration = (float)reading / divisor;
   return acceleration;

@@ -1,0 +1,55 @@
+
+My plan is to discuss and demonstrate  how we measure events and conditions in the physical world using electronic systems. This will be an introductory overview, using primarily sensors and microcontrollers. My goal is to give the students enough of an introduction to the process that they know where to investigate further if they want to critique the process in an informed way.
+
+The examples we've talked about are fairly pedestrian: people counting at an entrance or gateway (e.g. subway), accelerometry for activity measurement (I’ve got a crude step counter example), temp/humidity and how that might affect human activity in combination with the other sensors (e.g. are certain traffic routes less active when there’s cold or inclement weather?). We’ll also talk about camera tracking as people.movement counting, but there won’t be time to demonstrate it. Likewise, I’ll probably talk about phone tracking by sniffing the phone’s signal since it’s very topical, but we won’t get time to demonstrate it.
+
+What I’ll talk about:
+* Events in the physical world such as human movement, weather changes, or man-made environmental impacts like off-gassing from manufactured materials, generate changes in physical energy
+* Sensor-based data collection is  grounded in the process of transduction: the conversion of other forms of physical energy into electrical energy.
+* The transduction process has limits: how sensitive our instruments are, how lossless our programming algorithms are, etc.
+* Therefore, all electronic data about the events we’re sensing is a model based on this collected data.
+* Whether you’re gathering this data, analyzing it, or critiquing the process, you need to understand the process of gathering it.
+
+
+The red LED is on pin 13,
+The green LED is on pin 8
+The yellow LED turns on when the battery is charging off of USB
+
+The Real Time Clock (RTC) can keep running when you switch from USB to battery. This is handy for data logging, as you can set the time when you program the board, and as long as the battery is plugged in, the board will keep time.
+
+Intro to electricity
+  Ohm's Law
+
+Intro to microcontroller
+  Digital in, out
+  Analog in, out
+  Serial in, out
+  Synch serial in, out
+
+Intro to code
+  Commands, parameters
+  Serial output, input
+  Conditional statements
+  Variables
+  Loops
+  Libraries
+
+Intro to Feather Adalogger
+  I/O pins
+  Battery
+  SD Card
+  Real Time Clock
+
+Working with Sensors
+  Potentiometer
+  Pushbutton
+  Light Sensor
+  Motion Sensor
+  Distance Sensor
+  Microphone
+  Temp/Humidity Sensor
+  Accelerometer
+
+Programming the SD card
+
+Programming the Real Time Clock

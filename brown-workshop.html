@@ -32,7 +32,59 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h1>
-<a id="sensor-based-data-logging-using-microcontrollers" class="anchor" href="#sensor-based-data-logging-using-microcontrollers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction to Sensors for Journalism</h1>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction to Sensors for Journalism</h1>
+
+<p>In this workshop, you'll learn how we measure events and conditions in the physical world using electronic systems. Although this won't be comprehensize, you'll get an introduction to the process that they know where to investigate further if they want to critique the process in an informed way.</p>
+
+<p>Events in the physical world such as human movement, weather changes, or man-made environmental impacts like off-gassing from manufactured materials, generate changes in physical energy. Sensor-based data collection is  grounded in the process of <b>transduction</b>: the conversion of other forms of physical energy into electrical energy.</p>
+
+<p>The transduction process has limits: how sensitive our instruments are, how lossless our programming algorithms are, etc. Therefore, all electronic data about the events we’re sensing form models based on this collected data. Whether you’re gathering this data, analyzing it, or critiquing the process, you'll understand better how these models are formed if you understand how sensor-based data collection works.</p>
+
+<h3>Background Material</h3>
+
+<p>This workshop is based on material from the <a href="http://itp.nyu.edu/physcomp">introduction to physical computing course</a> at <a href="http://itp.nyu.edu">ITP</a>. The site for that course contains a large body of explanatory notes, videos, and example exercises that you will find useful as background for this workshop.</p>
+
+<p>Here are some of the technical concepts we'll cover, with links for background reading or viewing:</p>
+
+<ul>
+  <li>How to program a computer, using the Arduino programming environment</li>
+  <li>The <a href="https://itp.nyu.edu/physcomp/lessons/electronics/electricity-the-basics/">basic electrical properties of voltage, current, and resistance</a>, and how they are related</li>
+  <li><a href="https://itp.nyu.edu/physcomp/lessons/microcontrollers/microcontrollers-the-basics/">What microcontrollers are and how they are used</li>
+  <li><a href="https://itp.nyu.edu/physcomp/labs/labs-arduino-digital-and-analog/digital-input-and-output-with-an-arduino/">How to program an Arduino-compatible microcontroller</a></li>
+  <ul>
+    <li><a href="https://itp.nyu.edu/physcomp/lessons/microcontrollers/digital-input-output/">Digital input and output</a> (here's a <a href="https://itp.nyu.edu/physcomp/labs/labs-arduino-digital-and-analog/digital-input-and-output-with-an-arduino/">step-by-step example</a>)</li>
+    <li>Analog <a href="https://itp.nyu.edu/physcomp/lessons/microcontrollers/analog-input/">input</a> and <a href="https://itp.nyu.edu/physcomp/lessons/microcontrollers/analog-output/">output</a> (here are step-by-step examples for <a href="https://itp.nyu.edu/physcomp/labs/labs-arduino-digital-and-analog/analog-in-with-an-arduino/">input</a> and <a href="">output</a>)</li>
+    <li><a href="https://itp.nyu.edu/physcomp/lessons/serial-communication/serial-communication-the-basics/">Serial communications input and output</a> (here's a <a href="https://itp.nyu.edu/physcomp/lab-intro-to-serial-communications/">step-by-step example</a>)</li>
+  </ul>
+</ul>
+
+<p>The examples for this workshop are programs written using the <a href="http://www.arduino.cc">Arduino microcontroller programming environment</a>. Arduino is designed to give users with no technical background an introduction to programming microcontrollers, the small, simple computers inside many of the electronic devices in everyday life. The application that you'll download is known as an <b>integrated development environment</b>, or </b>IDE.</p>
+
+
+
+<h3>Getting Started</h3>
+
+<p>To get started, you'll need to download and install the <a href="https://www.arduino.cc/en/Main/Software">Arduino IDE version 1.6.7</a>.  All of the microcontroller examples for this workshop can be programmed using the Arduino IDE. You'll also need to install the board definition for the <a href="https://www.adafruit.com/products/2796">Feather Adalogger M0 board</a> using the Boards Manager in the IDE. You'll also need to install a library or two using the Library Manager as well. This section explains how to do that, for IDE version 1.6.7</p>. To start with, <a href="https://www.arduino.cc/en/Main/Software">download the Arduino IDE version 1.6.7</a>.
+
+
+
+<h4>The Boards Manager</h4>
+
+<p>There are more Arduino-compatible boards on the market than are listed in the IDE when you download it. To use a third-party board like the one used in this workshop, you'll need to install it using the Boards Manager. To install new board definitions click on the Tools menu, and choose Board... --> Boards Manager. Use the search bar to search for your board. If it's there, install it, then close the Boards Manager, and you should see your board show up in the Boards menu when you click on it next.</p>
+
+<p>If your board is not listed in the boards manager, you'll need to add the repository for it to the Preferences. Click on the Arduino menu, choose Preferences, and look for the field caled Additional Boards Manager URLs. Click the button to the right of it and add your board's repository URL to the list. is the UR for the Feather Adalogger M0 board: https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
+</p>
+<p>Once you've added your URL, click OK to exit the Preferences menu and restart the IDE. Your board should show up in the Boards Manager now, and you can install it as explained above.</p>
+
+<h3>The Library Manager</h3>
+
+<p>You can find installed libraries under the Sketch menu, Include Libraries option. You can find examples for them in the File Menu, Examples option.</p>
+
+<p>To install new libraries that don't come standard with the IDE, click on the Sketch menu, and choose Include Library... --> Manage Libraries. Use the search bar to search for your library. If it's there, install it, then close the Library Manager, and you should see your Library show up in the Sketch --> Include Library menu and the File --> Examples menu when you click on either of them next.</p>
+
+<p>If your library is not listed in the library manager, you can add it as a folder or .zip file using the Sketch --> Include library option as well. Just click Add .ZIP Library and follow the directions from there.</p>
+
+Once you've got your board installed and the libraries it needs, you're ready to use the examples in this repository.
 
       </section>
     </div>

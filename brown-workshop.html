@@ -64,7 +64,7 @@
 </ul>
 
 <p>
-  We'll cover most of the technical material in the first day, so that on the second day you can deploy your datalogging project,  gather some results, and present them at the end of the day.  
+  We'll cover most of the technical material in the first day, so that on the second day you can deploy your datalogging project,  gather some results, and present them at the end of the day.
 </p>
 
 <h3>Background Material and Reference Links</h3>
@@ -108,15 +108,27 @@ These links will be useful for reference:
 <h3>Getting Started</h3>
 
 <p>To get started, you'll need to download and install the <a href="https://www.arduino.cc/en/Main/Software">Arduino IDE version 1.6.7</a>.  All of the microcontroller examples for this workshop can be programmed using the Arduino IDE. You'll also need to install the board definition for the <a href="https://www.adafruit.com/products/2796">Feather Adalogger M0 board</a> using the Boards Manager in the IDE. You'll also need to install a library or two using the Library Manager as well. This section explains how to do that, for IDE version 1.6.7</p>. To start with, <a href="https://www.arduino.cc/en/Main/Software">download the Arduino IDE version 1.6.7</a>.
-
+<p>
+  Here's what it looks like:
+</p>
+  <img src="images/arduino-ide-screenshot.png" alt="arduino ide screenshot" width="400"/>
 
 
 <h4>The Boards Manager</h4>
 
 <p>There are more Arduino-compatible boards on the market than are listed in the IDE when you download it. To use a third-party board like the one used in this workshop, you'll need to install it using the Boards Manager. To install new board definitions click on the Tools menu, and choose Board... --> Boards Manager. Use the search bar to search for your board. If it's there, install it, then close the Boards Manager, and you should see your board show up in the Boards menu when you click on it next.</p>
 
+
+<img src="images/boards-manager-screenshot.png" alt="arduino boards manager" />
+<em>The Boards Manager. You can find your board faster by filtering with its name, as shown here.</em>
+
 <p>If your board is not listed in the boards manager, you'll need to add the repository for it to the Preferences. Click on the Arduino menu, choose Preferences, and look for the field caled Additional Boards Manager URLs. Click the button to the right of it and add your board's repository URL to the list. is the UR for the Feather Adalogger M0 board: https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
 </p>
+
+<img src="images/preferences-pane.png" alt="arduino preferences pane detail" />
+<em>Detail of the Preferences pane Additional URLs field</em>
+
+
 <p>Once you've added your URL, click OK to exit the Preferences menu and restart the IDE. Your board should show up in the Boards Manager now, and you can install it as explained above.</p>
 
 <h3>The Library Manager</h3>
@@ -125,7 +137,20 @@ These links will be useful for reference:
 
 <p>To install new libraries that don't come standard with the IDE, click on the Sketch menu, and choose Include Library... --> Manage Libraries. Use the search bar to search for your library. If it's there, install it, then close the Library Manager, and you should see your Library show up in the Sketch --> Include Library menu and the File --> Examples menu when you click on either of them next.</p>
 
+<img src="images/library-manager-screenshot.png" alt="arduino library manager" />
+<em>The Library manager. You can filter for particular libraries, like you can in the Boards Manager</em>
+
+
 <p>If your library is not listed in the library manager, you can add it as a folder or .zip file using the Sketch --> Include library option as well. Just click Add .ZIP Library and follow the directions from there.</p>
+
+Some of the examples in this repository use the following libraries. You can filter for these in the Library manager:
+
+<ul>
+  <li>Adafruit LIS3DH accelerometer</li>
+  <li>RTCZero Real-Time Clock</li>
+  <li>FrequencyMeter</li>
+  <li>SD (this is installed automatically with the IDE download)</li>
+</ul>
 
 Once you've got your board installed and the libraries it needs, you're ready to use the examples in this repository.
 

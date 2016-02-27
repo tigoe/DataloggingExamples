@@ -1,48 +1,45 @@
 /*
   SD card Temp & Humidity datalogger
- 
- This example shows how to log data from 
- a DHT11 temperature and humidity sensor 
- to an SD card using the SD library.
- 
- It also uses the Adafruit DHT sensor library from 
- https://github.com/adafruit/DHT-sensor-library
- 	
- The circuit:
- * SD card attached to SPI bus as follows:
+
+  This example shows how to log data from
+  a DHT11 temperature and humidity sensor
+  to an SD card using the SD library.
+
+  It also uses the Adafruit DHT sensor library from
+  https://github.com/adafruit/DHT-sensor-library
+
+  The circuit:
+   SD card attached to SPI bus as follows:
  ** MOSI - pin 11
  ** MISO - pin 12
  ** CLK - pin 13
  ** CS - pin 4
- * DHT11 sensor connected as follows:
+   DHT11 sensor connected as follows:
  ** Ground connected to 5
  ** Voltage connected to 8
  ** data out connected to 7
  ** 10K resistor connected from 7 to +5V
- 
- created  9 Feb 2012
- by Tom Igoe
- 
- This example code is in the public domain, subject to the licenses
- of the libraries used.
- 
- */
+
+  created  9 Feb 2012
+  by Tom Igoe
+
+  This example code is in the public domain, subject to the licenses
+  of the libraries used.
+
+*/
 
 #include <SD.h>
 #include "DHT.h"
 
-#define DHTPIN 7        // what pin the sensor is connected to
+#define DHTPIN 5        // what pin the sensor is connected to
 #define DHTTYPE DHT11   // Which type of DHT sensor you're using: 
-
-#define DHT_GND 5       // ground pin of the sensor
-#define DHT_VCC 8       // voltage pin of the sensor
 
 #define TEMPERATURE 1   //  for the DHT sensor
 #define HUMIDITY 0      // for the DHT sensor
 
 // initialize the sensor:
 DHT dht(DHTPIN, DHTTYPE);
-const int interval = 10*1000; // the interval between reads, in ms
+const int interval = 10 * 1000; // the interval between reads, in ms
 long lastReadTime = 0;        // the last time you read the sensor, in ms
 
 
@@ -55,19 +52,19 @@ const int chipSelect = 4;
 void setup() {
   Serial.begin(9600);
   if (startSDCard() == true) {
-    startSensor(); 
+    startSensor();
   }
 }
 
 void loop()
 {
- // Get the current time in ms:
+  // Get the current time in ms:
   long currentTime = millis();
 
   if (currentTime > lastReadTime + interval) {
     float humidity = readSensor (HUMIDITY);
     float temperature = readSensor(TEMPERATURE);
-    
+
     // open the file:
     File dataFile = SD.open("datalog.csv", FILE_WRITE);
 
@@ -77,16 +74,17 @@ void loop()
       dataFile.print("\t");
       dataFile.println(temperature);
       dataFile.close();
-      // print to the serial port too:
-        Serial.print(humidity);
+    }
+    // print to the serial port too:
+    Serial.print(humidity);
     Serial.print("\t");
     Serial.println(temperature);
-      lastReadTime = millis();
-    }  
+    lastReadTime = millis();
+    // }
     // if the file isn't open, pop up an error:
-    else {
-      Serial.println("error opening datalog.csv");
-    } 
+//    else {
+//      Serial.println("error opening datalog.csv");
+//    }
   }
 }
 
@@ -103,7 +101,7 @@ boolean startSDCard() {
     Serial.println("Card failed, or not present");
     // don't do anything more:
     result = false;
-  } 
+  }
   else {
     Serial.println("card initialized.");
     File dataFile = SD.open("datalog.csv", FILE_WRITE);
@@ -113,19 +111,14 @@ boolean startSDCard() {
       dataFile.close();
       result = true;
     }
-  }  
+  }
   return result;
 }
 
 
 void startSensor() {
-  // set up pins to power and read sensor:
-  pinMode(DHT_VCC, OUTPUT);
-  pinMode(DHT_GND, OUTPUT);
-  digitalWrite(DHT_VCC, HIGH);
-  digitalWrite(DHT_GND, LOW);
   // start sensor:
-  dht.begin(); 
+  dht.begin();
 }
 
 // get the sensor readings and concatenate them in a String:
@@ -135,18 +128,18 @@ float readSensor( int thisValue) {
 
   if (thisValue == TEMPERATURE) {
     result = dht.readTemperature();
-  } 
+  }
   else if (thisValue == HUMIDITY) {
     // read sensor:
-    result = dht.readHumidity();   
+    result = dht.readHumidity();
   }
 
   // make sure you have good readings. If the reading
   // is not a number (NaN) then return an error:
   if (isnan(result)) {
-    // an impossible result for either reading 
+    // an impossible result for either reading
     // so it'll work as an error:
-    result = -273.0; 
+    result = -273.0;
   }
   return result;
 }

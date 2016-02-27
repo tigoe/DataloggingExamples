@@ -36,12 +36,27 @@
 
 In this workshop you'll be working with the Adafruit Feather M0 Adalogger microcontroller board. This board uses a Cortex ARM M0+, which is the same processor as the Arduino Zero. That means it's Arduino-compatible, and a very capable processor for datalogging.  The <a href="https://learn.adafruit.com/adafruit-feather-m0-adalogger?view=all">Adafruit Guide to the Feather M0 Adalogger</a> is a thorough introduction. This page is a quick-reference only.
 
+<h3>Functions of the Board</h3>
+
+<p>
+  The Feather M0 Adalogger can read various sensors using its digital and analog inputs and its asynchronous serial and I2C communications pins. It can also read and write from an attached SD card. It can communicate with a personal computer via USB as well. It has a Lithium-Poly (LiPo) battery charger built-in so you can charge a battery while you're programming, then unplug and run off the battery independently. There's also a built-in real-time clock that can keep accurate time and two built-in LEDs that you can use to indicate what's going on.
+</p>
+<p>
+  Below is the pin diagram for the board. Many of the pins have multiple functions. For the purposes of this workshop, the important pins are as follows:
+</p>
+
+<ul>
+  <li><strong>Digital I/O pins.</strong> You can attach digital inputs (switches and pushbuttons) and digital outputs (LEDs, etc) to these pins to control them using the digitalRead() and digitalWrite() commands</li>
+  <li><strong>Analog input pins</strong> You can attach sensors that produce a changing analog voltage to these pins and read them using the analogRead() command. Potentiometers, light sensors, distance sensors, and force sensors are good examples of this kind of sensor.</li>
+  <li><strong>SPI pins</strong> The pins labeled MISO, MOSI, and SCK are for synchronous serial communication using the SPI protocol. They control the SD card. You shouldn't use them for other inputs or outputs</li>
+  <li><strong>I2C pins</strong> The pins labeled SDA and SCL are for synchronous serial communications using the I2C protocol. These are used for communicating with sensors like the LIS3DH accelerometer and others.</li>
+</ul>
+<a href="images/adafruit_products_p2796.png"><img src="images/adafruit_products_p2796.png" alt="Feather M0 Adalogger pin diagram" width="640"/></a>
+<em>Click the image to enlarge. For more on the pin functions, see <a href="https://learn.adafruit.com/adafruit-feather-m0-adalogger?view=all#pinouts">this link.</a></em>
+
 <h3>Setting up the board</h3>
 
-To set up the board, you need to download the Arduino IDE version 1.6.7 and install the boards definition as shown on the <a href="brown-workshop.html#getting-started">intro page for the workshop</a>.
-
-<a href="images/adafruit_products_p2796.png"><img src="images/adafruit_products_p2796.png" alt="Feather M0 Adalogger pin diagram" width="800"/></a>
-<em>Click the image to enlarge</em>
+<p>To set up the board, you need to download the Arduino IDE version 1.6.7 and install the boards definition as shown on the <a href="brown-workshop.html#getting-started">intro page for the workshop</a>. Once you've got the necessary software installed, plug the board into a soldereless breadboard as shown below, then plug it into your computer's USB port. </p>
 
 
       </section>

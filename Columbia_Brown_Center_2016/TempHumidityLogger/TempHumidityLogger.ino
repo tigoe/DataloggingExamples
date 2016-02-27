@@ -1,20 +1,25 @@
 /*
-  Battery and analog input logger
-  This sketch reads the battery level and analog input A0
+  Temperature and humidity logger
+  This sketch reads the temperature and humidity from a DHT11 sensor
   on an Adalogger and saves their values to a comma-separated values (CSV) file.
 
   Written and tested on an Adalogger M0 board
   .
-  created 22 Jan 2016
-  modified 16 Feb 2016
+  created 25 Feb 2016
   by Tom Igoe
 
 */
 
-#include <SPI.h>
-#include <SD.h>
 
-const int batteryPin = A7;        // battery voltage is on pin A7
+#include <SD.h>
+#include "DHT.h"
+
+#define DHTPIN 5        // what pin the sensor is connected to
+#define DHTTYPE DHT11   // Which type of DHT sensor you're using: 
+
+// initialize the sensor:
+DHT dht(DHTPIN, DHTTYPE);
+
 const int chipSelect = 4;         // SPI chip select for SD card
 const int cardDetect = 7;          // pin that detects whether the card is there
 const int writeLed = 8;           // LED indicator for writing to card
@@ -49,9 +54,12 @@ void setup() {
   File logFile = SD.open(fileName, FILE_WRITE);
   // write header columns to file:
   if (logFile) {
-    logFile.println("Battery Voltage,Sensor Reading");
+    logFile.println("Temperature,Humidity");
     logFile.close();
   }
+
+  // initialize the sensor:
+  dht.begin();
 }
 
 void loop() {
@@ -68,21 +76,20 @@ void loop() {
     File logFile = SD.open(fileName, FILE_WRITE);   // open the log file
     if (logFile) {                                  // if you can write to the log file,
       digitalWrite(writeLed, HIGH);                 // turn on the write LED
-      float batteryVoltage = readBattery();         // read the battery voltage
+      // read sensor:
+      float humidity = dht.readTemperature();
+      float temperature = dht.readHumidity();
 
-      // sensor input pin is 0 - 3.3V. Read and convert:
-      float sensorVoltage = analogRead(A0);
-      sensorVoltage = (sensorVoltage * 3.3) / 1024;
-
-      logFile.print(batteryVoltage);      // print battery voltage to the log
-      logFile.print(",");                 // print comma to the log
-      logFile.println(sensorVoltage);     // print sensor voltage & newline to the log
+      // print to the log file:
+      logFile.print(humidity);
+      logFile.print(",");
+      logFile.println(temperature);
       logFile.close();                    // close the file
-      
+
       // for debugging only:
-      Serial.print(batteryVoltage);
+      Serial.print(humidity);
       Serial.print(",");
-      Serial.println(sensorVoltage);
+      Serial.println(temperature);
 
       // update the last attempted save time:
       lastWriteTime = millis();
@@ -98,15 +105,4 @@ boolean startSDCard() {
     return false;
   }
   return true;
-}
-
-float readBattery() {
-  // read battery voltage:
-  float batteryV = analogRead(batteryPin);
-  // voltage is halved by the on-board voltage divider,
-  // so real voltage is * 2:
-  batteryV =  batteryV * 2;
-  // multiply by reference voltage (3.3) and divide by analog resolution:
-  batteryV = (batteryV * 3.3) / 1024;
-  return batteryV;
 }

@@ -15,7 +15,6 @@
   
 */
 
-#include <SD.h>
 #include "DHT.h"
 
 #define DHTPIN 5        // what pin the sensor is connected to

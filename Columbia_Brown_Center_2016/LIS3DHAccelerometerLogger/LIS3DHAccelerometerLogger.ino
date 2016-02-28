@@ -13,7 +13,7 @@
     the reading should be around 4095 for that axis (or -4096, depending on
     the orientation).
 
-    modified 26 Feb 2016
+    modified 28 Feb 2016
     by Tom Igoe
 */
 
@@ -32,33 +32,25 @@ long interval = 10000;            // time between readings
 char fileName[] = "datalog.csv";  // filename to save on SD card
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(9600);   // initialize serial communication
 
   // initialize LED and cardDetect pins:
   pinMode(writeLed, OUTPUT);
   pinMode(errorLed, OUTPUT);
   pinMode(cardDetect, INPUT_PULLUP);
 
-  // Stay in this loop until the card is inserted:
-  while (digitalRead(cardDetect) == LOW) {
-    Serial.println("Waiting for card...");
-    digitalWrite(errorLed, HIGH);
-    delay(750);
-  }
-
-  // check if the card initialized successfully:
+  // startSDCard() blocks everything until the card is present
+  // and writable:
   if (startSDCard() == true) {
     Serial.println("card initialized.");
     delay(100);
-  } else {
-    Serial.println("Card failed");
-  }
-  // open the log file:
-  File logFile = SD.open(fileName, FILE_WRITE);
-  // write header columns to file:
-  if (logFile) {
-    logFile.println("Temperature,Humidity");
-    logFile.close();
+    // open the log file:
+    File logFile = SD.open(fileName, FILE_WRITE);
+    // write header columns to file:
+    if (logFile) {
+      logFile.println("Battery Voltage,Sensor Reading");
+      logFile.close();
+    }
   }
 
   if (! accelerometer.begin(0x18)) {
@@ -115,11 +107,18 @@ float convertReading(int reading) {
 }
 
 boolean startSDCard() {
-  // check to see that the SD card is responding:
-  if (!SD.begin(chipSelect)) {      // if not,
+  // Wait until the card is inserted:
+  while (digitalRead(cardDetect) == LOW) {
+    Serial.println("Waiting for card...");
+    digitalWrite(errorLed, HIGH);
+    delay(750);
+  }
+
+  // wait until the card initialized successfully:
+  while (!SD.begin(chipSelect)) {
     digitalWrite(errorLed, HIGH);   // turn on error LED
-    return false;
+    Serial.println("Card failed");
+    delay(750);
   }
   return true;
 }
-

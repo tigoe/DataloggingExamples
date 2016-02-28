@@ -6,7 +6,7 @@
   Written and tested on an Adalogger M0 board
   .
   created 22 Jan 2016
-  modified 16 Feb 2016
+  modified 28 Feb 2016
   by Tom Igoe
 
 */
@@ -31,26 +31,18 @@ void setup() {
   pinMode(errorLed, OUTPUT);
   pinMode(cardDetect, INPUT_PULLUP);
 
-  // Stay in this loop until the card is inserted:
-  while (digitalRead(cardDetect) == LOW) {
-    Serial.println("Waiting for card...");
-    digitalWrite(errorLed, HIGH);
-    delay(750);
-  }
-
-  // check if the card initialized successfully:
+  // startSDCard() blocks everything until the card is present
+  // and writable:
   if (startSDCard() == true) {
     Serial.println("card initialized.");
     delay(100);
-  } else {
-    Serial.println("Card failed");
-  }
-  // open the log file:
-  File logFile = SD.open(fileName, FILE_WRITE);
-  // write header columns to file:
-  if (logFile) {
-    logFile.println("Battery Voltage,Sensor Reading");
-    logFile.close();
+    // open the log file:
+    File logFile = SD.open(fileName, FILE_WRITE);
+    // write header columns to file:
+    if (logFile) {
+      logFile.println("Battery Voltage,Sensor Reading");
+      logFile.close();
+    }
   }
 }
 
@@ -78,7 +70,7 @@ void loop() {
       logFile.print(",");                 // print comma to the log
       logFile.println(sensorVoltage);     // print sensor voltage & newline to the log
       logFile.close();                    // close the file
-      
+
       // for debugging only:
       Serial.print(batteryVoltage);
       Serial.print(",");
@@ -92,10 +84,18 @@ void loop() {
 }
 
 boolean startSDCard() {
-  // check to see that the SD card is responding:
-  if (!SD.begin(chipSelect)) {      // if not,
+  // Wait until the card is inserted:
+  while (digitalRead(cardDetect) == LOW) {
+    Serial.println("Waiting for card...");
+    digitalWrite(errorLed, HIGH);
+    delay(750);
+  }
+
+  // wait until the card initialized successfully:
+  while (!SD.begin(chipSelect)) {
     digitalWrite(errorLed, HIGH);   // turn on error LED
-    return false;
+    Serial.println("Card failed");
+    delay(750);
   }
   return true;
 }
@@ -105,7 +105,8 @@ float readBattery() {
   float batteryV = analogRead(batteryPin);
   // voltage is halved by the on-board voltage divider,
   // so real voltage is * 2:
-  batteryV =  batteryV * 2;
+  batteryV =  batteryV
+              * 2;
   // multiply by reference voltage (3.3) and divide by analog resolution:
   batteryV = (batteryV * 3.3) / 1024;
   return batteryV;

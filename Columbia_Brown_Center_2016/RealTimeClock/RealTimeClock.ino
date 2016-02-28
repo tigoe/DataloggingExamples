@@ -9,7 +9,7 @@
 #include <RTCZero.h>
 
 RTCZero rtc;
-const byte days = 16;
+const byte days = 28;
 const byte months = 02;
 const byte years = 16;
 

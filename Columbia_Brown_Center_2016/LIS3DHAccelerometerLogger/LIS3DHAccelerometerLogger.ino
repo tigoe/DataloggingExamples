@@ -86,8 +86,6 @@ void loop() {
       // read sensor:
 
       accelerometer.read();      // get X Y and Z data at once
-
-
       // print to the log file:
       // Convert the readings to g's (1g = 9.8 m/s^2):
       logFile.print(convertReading(accelerometer.x));
@@ -96,14 +94,12 @@ void loop() {
       logFile.print(",");
       logFile.println(convertReading(accelerometer.z));
 
-
       // for debugging only:
       Serial.print(convertReading(accelerometer.x));
       Serial.print(",");
       Serial.print(convertReading(accelerometer.y));
       Serial.print(",");
       Serial.println(convertReading(accelerometer.z));
-
 
       // update the last attempted save time:
       lastWriteTime = millis();

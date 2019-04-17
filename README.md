@@ -5,7 +5,7 @@ There are several ways to save data from a sensor attached to a microcontroller.
 This site contains a number of data logging examples I've written for different workshops on the topic over the years. The most recent examples reflect my most up-to-date practices, of course.    
 
 ## 2019: MKR Series Examples
-In 2019 I started writing examples for the MKR series of Arduinos, which are based on the SAMD21 ARM M0+ processor. The built-in realtime clock on the MKR boards, along with other features, make them my current favorite for datalogging.
+In 2019 I started writing examples for the MKR series of Arduinos, which are based on the SAMD21 ARM M0+ processor. The built-in realtime clock on the MKR boards, along with other features, make them my current favorite for datalogging. More detailed instructions will follow over time, and in the meantime, the [examples are linked here](https://github.com/tigoe/DataloggingExamples/tree/master/MKR_examples). 
 
 ## 2015: Brown Institute for Media Innovation Workshop
 I presented [a workshop](brown-workshop.md)

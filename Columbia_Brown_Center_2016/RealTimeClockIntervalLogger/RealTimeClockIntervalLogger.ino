@@ -20,6 +20,7 @@ int years = 0;
 RTCZero rtc;                    // make an instance of the RTC library
 boolean logged = false;
 int interval = 10;              // logging interval, in seconds
+
 void setup() {
   Serial.begin(9600);           // enable serial communication
   rtc.begin();                  // start the real-time clock
@@ -49,7 +50,6 @@ void logData() {
   // read the sensors here
   // save to the SD card here
   printTime();            // print the time
-
 }
 
 /*

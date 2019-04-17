@@ -2,7 +2,7 @@
 
 There are several ways to save data from a sensor attached to a microcontroller.  If you're connected to a personal computer, you can simply send the data from the controller to the personal computer serially, and save it to a file.  If you've got an SD card attached to the microcontroller, you can save the data to the SD card. Or, if you have access to the internet and a device that can connect to a server, you can save the data to a server. 
 
-This site contains a number of data logging examples I've written for different workshops on the topic over the years. The most recent examples reflect my most up-to-date practices, of course. 
+This site contains a number of data logging examples I've written for different workshops on the topic over the years. The most recent examples reflect my most up-to-date practices, of course.
 
 ## 2019: MKR Series Examples
 In 2019 I started writing examples for the MKR series of Arduinos, which are based on the SAMD21 ARM M0+ processor. The built-in realtime clock on the MKR boards, along with other features, make them my current favorite for datalogging.

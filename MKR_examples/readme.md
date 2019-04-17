@@ -1,6 +1,6 @@
  # Data Logging Examples for the MKR series Arduino Microcontrollers
 
- 
+
  ## Formatting an SD Card
 
 Creating a FAT16/FAT32 SD card to work with the library on MacOS:

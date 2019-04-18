@@ -5,7 +5,7 @@ There are several ways to save data from a sensor attached to a microcontroller.
 This site contains a number of data logging examples I've written for different workshops on the topic over the years. The most recent examples reflect my most up-to-date practices, of course.    
 
 * 2019: [MKR Series Examples](https://tigoe.github.io/DataloggingExamples/mkr-datalogging.html)
-* 2016: [Brown Institute for Media Innovation Workshop](https://tigoe.github.io/DataloggingExamples/mkr-datalogging.html)
+* 2016: [Brown Institute for Media Innovation Workshop](https://tigoe.github.io/DataloggingExamples/brown-workshop.html)
 * 2012: [Citizen Science Cybersummit Workshop](http://www.tigoe.net/pcomp/code/?p=1043)
 
 

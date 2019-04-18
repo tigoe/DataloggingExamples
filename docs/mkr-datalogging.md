@@ -1,4 +1,4 @@
- # Data Logging Examples for the MKR series Arduino Microcontrollers
+# Data Logging Examples for the MKR series Arduino Microcontrollers
 
 The MKR series boards offer a number of ways to build networked dataloggers that can send data to remote devices via WiFi (MKR 1000, 1010, Vidor), Bluetooth LE (MKR 1010, Vidor), 3G cellular (MKR 1300), LoRaWan (MKR 1400), and LTE narrowband (MKR 1500). But the most immediate way is to write to an SD card. The MKR Zero has a built-in slot, the MKR Mem shield and others offer an external SD slot, and there are numerous SD card slot breakout boards from other retailers.  The [SD library](https://www.arduino.cc/en/reference/SD) supports all the Arduino boards, communicating with the SD card via SPI. 
 
@@ -8,7 +8,7 @@ The MKR series boards offer a number of ways to build networked dataloggers that
 * [MKR_battery_LowPower_TimedWakeTest](https://github.com/tigoe/DataloggingExamples/tree/master/MKR_examples/MKR_battery_LowPower_TimedWakeTest)
 * [MKR_Datestamped_Files](https://github.com/tigoe/DataloggingExamples/tree/master/MKR_examples/MKR_Datestamped_Files)
 
- ## Formatting an SD Card
+## Formatting an SD Card
 
 To use the SD library, you need to format your SD card as either FAT16 or FAT32. The MacOS Disk Utility application can sometimes make this troublesome, so here are instructions from the MacOS command line>
 

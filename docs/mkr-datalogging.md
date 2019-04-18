@@ -8,11 +8,17 @@ The MKR series boards offer a number of ways to build networked dataloggers that
 * [MKR_battery_LowPower_TimedWakeTest](https://github.com/tigoe/DataloggingExamples/tree/master/MKR_examples/MKR_battery_LowPower_TimedWakeTest)
 * [MKR_Datestamped_Files](https://github.com/tigoe/DataloggingExamples/tree/master/MKR_examples/MKR_Datestamped_Files)
 
+## Board Layout
+
+For all the examples shown here will use the same default layout of the MKR series boards, as shown in Figure 1 below. The MKR Zero is mounted at the top center of the breadboard, straddling the center divide. The pins are numbered in a U-shape from top left to bottom left (physical pin numbers 1 to 14), then from bottom right to top right (physical pins 15 to 28). Each pin has a functional name in addition to its physical number. For example, physical pin 26 on the right (Vcc pin) is connected to the voltage bus on the right side of the breadboard. Physical pin 25 (GND) is connected to the ground bus on the right side of the board. The voltage and ground buses on the right are conected to the voltage and ground buses on the left, respectively.
+
+![Figure 1. MKR Zero on a breadboard](images/MKR_bb.png)
+
+_Figure 1. MKR Zero on a breadboard. This layout, described above, is standard for all the examples in this repository._
+
 ## Formatting an SD Card
 
-To use the SD library, you need to format your SD card as either FAT16 or FAT32. The MacOS Disk Utility application can sometimes make this troublesome, so here are instructions from the MacOS command line>
-
-Open the Terminal app and run the following command to list your disks:
+To use the SD library, you need to format your SD card as either FAT16 or FAT32. The MacOS Disk Utility application can sometimes make this troublesome, so here are instructions from the MacOS command line. Open the Terminal app and run the following command to list your disks:
 
 ````
 $ diskutil list

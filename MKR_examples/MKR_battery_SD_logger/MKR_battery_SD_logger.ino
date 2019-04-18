@@ -38,8 +38,10 @@ void setup() {
   Serial.println("Card working: " + String(SDAvailable));
   // print a header to the SD card file:
   File dataFile = SD.open(logFile, FILE_WRITE);
+  if (dataFile) {
   dataFile.println("Battery voltage:,%:, elapsed seconds:");
   dataFile.close();
+  }
 }
 
 void loop() {

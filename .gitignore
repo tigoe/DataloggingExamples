@@ -5,3 +5,10 @@
 MKR_examples/MKR_Interrupt_RTC_logger/MKR_LIS3DH.fzz
 .DS_Store
 .DS_Store
+MKR_examples/NetworkClientLogger/arduino_secrets.h
+*/.DS_Store
+.DS_Store
+.vscode/arduino.json
+.vscode/c_cpp_properties.json
+MKR_examples/NetworkClientLogger/arduino_secrets.h
+MKR_examples/NetworkClientLogger/arduino_secrets.h

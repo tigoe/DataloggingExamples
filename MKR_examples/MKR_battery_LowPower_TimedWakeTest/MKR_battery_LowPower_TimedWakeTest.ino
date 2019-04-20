@@ -1,5 +1,3 @@
-
-
 /*
   MKR battery test with LowPower library and timed sleep
   This example shows how to put the MKR series boards to sleep
@@ -15,7 +13,6 @@
 */
 
 #include <ArduinoLowPower.h>
-#include <RTCZero.h>
 #include <SPI.h>
 #include <SD.h>
 

@@ -28,14 +28,18 @@ This client was originally written to communicate with an HTTP server written in
 
 ### Node.js Datalogger
 
-The [node-datalogging-server](https://github.com/tigoe/DataloggingExamples/tree/master/WiFiDatalogger/node-datalogging-server)has a RESTful API that accepts data formatted as a JSON string in the body of a POST request, and that's what the client sends. You can also see all the records of the server by making a GET request.
+![system diagram of a wifi-datalogger, as described below.](images/wifi-datalogger.png)
+_Figure 1. System diagram of the node datalogging server_
+
+The [node-datalogging-server](https://github.com/tigoe/DataloggingExamples/tree/master/WiFiDatalogger/node-datalogging-server) has a RESTful API that accepts data formatted as a JSON string in the body of a POST request. The client microcontroller reads its sensors, then sends the readings in a POST request with a JSON body to the server. One version of the server writes the JSON string to a text file, as diagrammed in Figure 1. 
+
+You can also read all the records of the server by making a GET request.
 
 The JSON data in the POST request should look like this:
 ````js
 { "uid": client ID, a 9-byte ID in hexadecimal format,
   "date": date in ISO8601 format}
 ````
-
 The [ISO8601 time format](https://en.wikipedia.org/wiki/ISO_8601) looks like this: `2021-05-24T10:31:14Z`
 
 You can also include any sensor characteristics that you want to add. The Arduino examples in this collection send light and color temperature levels in lux (`lux`) and degrees Kelvin (`ct`), respectively. The server doesn't check the names of the characteristics in the JSON data, so you can add anything you want. 
@@ -56,9 +60,15 @@ There are two versions of the server, one of which saves the incoming data in an
 
 ### Google Sheets Datalogger
 
+![system diagram of a datalogger connected to a Google spreadsheet, as described below.](images/wifi-datalogger-google-sheets.png)
+_Figure 2. System diagram of the Google apps script datalogger_
+
+
 [Google Apps script](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app) allows you to save data to a Google Sheets spreadsheet via HTTP. Arnab Chakravarty has a [tutorial on how it works](https://github.com/AbolTaabol/Arduino-GoogleSheet_Logger). For more background on Google Apps scripts, see the link above, or [this link](https://developers.google.com/apps-script/guides/web) which explains the web functions `doGet()` and `doPost()`, which are the main functions of this example. 
 
-What's great about the Google Apps scripting API is that it's just JavaScript, and it gives you everything you might need to know about a given HTTP request in JSON, so it's easy to parse it out and put it into the cells of a spreadsheet. 
+The structure of the system is similar to the node server, and is diagrammed in Figure 2. The microcontroller only has to change the URL and API route that it's sending data to, in order to send data to the Google apps script. The script takes the place of the node.js server, and writes to a Google Sheets spreadsheet instead of a text file.
+
+What's great about the Google Apps scripting API is that it's just JavaScript, it lets you give your spreadsheet into a web service quickly,   and it gives you everything you might need to know about a given HTTP request in JSON, so it's easy to parse it out and put it into the cells of a spreadsheet. This lets you take advantage of all the things you can do with the data in a spreadsheet: sorting, graphing, filtering, and so forth.
 
 Briefly, the steps to get started are as follows:
 

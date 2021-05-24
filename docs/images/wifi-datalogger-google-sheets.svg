@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xl="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="244 116 579 288" width="579" height="288">
+  <defs>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <font-face font-family="Helvetica Neue" font-size="12" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.18.5\n2021-05-24 16:41:28 +0000</metadata>
+  <g id="Canvas_1" stroke="none" stroke-dasharray="none" fill="none" stroke-opacity="1" fill-opacity="1">
+    <title>Canvas 1</title>
+    <rect fill="white" x="244" y="116" width="579" height="288"/>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_8">
+        <rect x="478.38614" y="117" width="343.61386" height="222" fill="white"/>
+        <rect x="478.38614" y="117" width="343.61386" height="222" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(483.38614 122)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">Web host</tspan>
+        </text>
+      </g>
+      <g id="Graphic_4">
+        <rect x="254" y="150.26575" width="68" height="108" fill="white"/>
+        <rect x="254" y="150.26575" width="68" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(259 195.04175)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="1.288" y="15">Arduino</tspan>
+        </text>
+      </g>
+      <g id="Graphic_5">
+        <rect x="501" y="179.26575" width="100" height="50" fill="white"/>
+        <rect x="501" y="179.26575" width="100" height="50" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(506 185.81775)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="19.08" y="15">Google </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="4.992" y="33.448">apps script</tspan>
+        </text>
+      </g>
+      <g id="Graphic_6">
+        <rect x="245" y="353" width="77" height="50" fill="white"/>
+        <rect x="245" y="353" width="77" height="50" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(250 368.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="4.316" y="15">Sensors</tspan>
+        </text>
+      </g>
+      <g id="Graphic_7">
+        <rect x="684" y="218" width="119" height="103.33176" fill="white"/>
+        <rect x="684" y="218" width="119" height="103.33176" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(689 260.44188)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="9.156" y="15">Spreadsheet</tspan>
+        </text>
+      </g>
+      <g id="Line_9">
+        <line x1="284.14754" y1="353" x2="286.34497" y2="268.16243" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_10">
+        <line x1="322" y1="204.26575" x2="491.1" y2="204.26575" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_11">
+        <line x1="601" y1="221.2528" x2="674.6262" y2="246.26663" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_12">
+        <rect x="258.61573" y="282.7076" width="53.332" height="53.007996" fill="white"/>
+        <text transform="translate(263.61573 287.7076)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="10.776" y="11">I2C, </tspan>
+          <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="10.668" y="25.336">SPI, </tspan>
+          <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="0" y="39.671997">or GPIO</tspan>
+        </text>
+      </g>
+      <g id="Graphic_13">
+        <rect x="347.7477" y="170.59375" width="92.008" height="67.343994" fill="white"/>
+        <text transform="translate(352.7477 175.59375)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="8.448" y="11">HTTP POST</tspan>
+          <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="16.452" y="25.336">{uid: xxx,</tspan>
+          <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="1.668" y="39.671997">dateTime: xxx, </tspan>
+          <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x=".456" y="54.007996">sensorVal: xxx}</tspan>
+        </text>
+      </g>
+      <g id="Graphic_14">
+        <rect x="617.2107" y="223.8026" width="54.22" height="24.335999" fill="white"/>
+        <text transform="translate(622.2107 228.8026)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="black" x="58264504e-20" y="11">JS array</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

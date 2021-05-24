@@ -29,6 +29,7 @@ This client was originally written to communicate with an HTTP server written in
 ### Node.js Datalogger
 
 ![system diagram of a wifi-datalogger, as described below.](images/wifi-datalogger.png)
+
 _Figure 1. System diagram of the node datalogging server_
 
 The [node-datalogging-server](https://github.com/tigoe/DataloggingExamples/tree/master/WiFiDatalogger/node-datalogging-server) has a RESTful API that accepts data formatted as a JSON string in the body of a POST request. The client microcontroller reads its sensors, then sends the readings in a POST request with a JSON body to the server. One version of the server writes the JSON string to a text file, as diagrammed in Figure 1. 
@@ -61,6 +62,7 @@ There are two versions of the server, one of which saves the incoming data in an
 ### Google Sheets Datalogger
 
 ![system diagram of a datalogger connected to a Google spreadsheet, as described below.](images/wifi-datalogger-google-sheets.png)
+
 _Figure 2. System diagram of the Google apps script datalogger_
 
 

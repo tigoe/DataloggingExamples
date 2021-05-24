@@ -14,9 +14,10 @@
    http://librarymanager/All#Arduino_JSON
    http://librarymanager/All#RTCZero
    http://librarymanager/All#Adafruit_TCS34725 (for the sensor)
+   http://librarymanager/All#ECCX08 (for the crypto chip)
 
   created 18 Feb 2019
-  modified 23 May 2021
+  modified 24 May 2021
   by Tom Igoe
 */
 // include required libraries and config files

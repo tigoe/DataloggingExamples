@@ -111,7 +111,7 @@ The script will still add your data to the sheet if it's valid, even when it giv
 
 If you want the full response from the server, however, try the [DataLoggerHttpClientJSON_redirect](https://github.com/tigoe/DataloggingExamples/tree/master/WiFiDatalogger/DataLoggerHttpClientJSON_redirect) sketch. When this sketch gets the 302 response, it reads the headers, parses the new server and API route from the `location` field, makes the second request to that address, and gets the response back. 
 
-For more on this, see https://developers.google.com/apps-script/guides/content#redirects
+For more on this, see the [Google script guide on redirects](https://developers.google.com/apps-script/guides/content#redirects). 
 
 
 

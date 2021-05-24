@@ -2,6 +2,8 @@
 
 The MKR series boards offer a number of ways to build networked dataloggers that can send data to remote devices via WiFi (MKR 1000, 1010, Vidor), Bluetooth LE (MKR 1010, Vidor), 3G cellular (MKR 1300), LoRaWan (MKR 1400), and LTE narrowband (MKR 1500). But the most immediate way is to write to an SD card. The MKR Zero has a built-in slot, the MKR Mem shield and others offer an external SD slot, and there are numerous SD card slot breakout boards from other retailers.  The [SD library](https://www.arduino.cc/en/reference/SD) supports all the Arduino boards, communicating with the SD card via SPI. 
 
+If you're interested in using the network-enabled versions of these boards (MKR1010, MKR1000, MKR1400, MKR1500) to connect to a web app that logs the data, see the [WiFi Datalogger tutorial](wifi-datalogger.md). 
+
 ## Examples
 * [MKR_Interrupt_RTC_logger](https://github.com/tigoe/DataloggingExamples/tree/master/MKR_examples/MKR_Interrupt_RTC_logger)   
 * [MKR_battery_SD_logger](https://github.com/tigoe/DataloggingExamples/tree/master/MKR_examples/MKR_battery_SD_logger)

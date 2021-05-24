@@ -8,7 +8,7 @@
   from Google Sheets scripts. For more on this,
   see https://developers.google.com/apps-script/guides/content#redirects
   
-  This client works with the server found at XXXXX
+  This client works with the google sheets datalogger found in this repository
 
   Works with MKR1010, MKR1000, Nano 33 IoT
   Uses the following libraries:

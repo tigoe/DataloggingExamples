@@ -4,7 +4,7 @@
   Connects to a server using HTTPS and uploads data.
   Uses realtime clock on the SAMD21 (MKR boards and Nano 33 IoT) to
   keep time.
-  This client works with the server found at XXXXX
+  This client works with the servers found in this repository
 
   Works with MKR1010, MKR1000, Nano 33 IoT
   Uses the following libraries:
@@ -23,7 +23,7 @@
 // include required libraries and config files
 #include <SPI.h>
 //#include <WiFi101.h>        // for MKR1000 modules
-#include <WiFiNINA.h>         // for MKR1010 modules
+#include <WiFiNINA.h>         // for MKR1010 modules and Nano 33 IoT modules
 #include <ArduinoHttpClient.h>
 // for simplifying JSON formatting:
 #include <Arduino_JSON.h>

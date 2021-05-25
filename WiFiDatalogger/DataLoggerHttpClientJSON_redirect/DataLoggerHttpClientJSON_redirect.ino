@@ -7,7 +7,7 @@
   This version also handles HTTP error 302 redirects
   from Google Sheets scripts. For more on this,
   see https://developers.google.com/apps-script/guides/content#redirects
-  
+
   This client works with the google sheets datalogger found in this repository
 
   Works with MKR1010, MKR1000, Nano 33 IoT
@@ -20,6 +20,7 @@
    http://librarymanager/All#Adafruit_TCS34725 (for the sensor)
 
   created 23 May 2021
+  updated 25 May 2021
   by Tom Igoe
 */
 // include required libraries and config files
@@ -146,6 +147,7 @@ void readSensor() {
   body["dateTime"] = getISOTimeString();
   body["lux"] = lux;
   body["ct"] = colorTemp;
+  body["uptime"] = getUptime();
 }
 
 // gets an ISO8601-formatted string of the current time:
@@ -174,9 +176,9 @@ String getISOTimeString() {
 }
 
 /*
- This function creates a new HTTPClient to get the result
- from the google script redirect
- */
+  This function creates a new HTTPClient to get the result
+  from the google script redirect
+*/
 int redirectRequest() {
   String tempServer;
   String tempRoute;
@@ -245,11 +247,38 @@ void connectToNetwork() {
     epoch = WiFi.getTime();
     delay(2000);
   } while (epoch == 0);
-
+  // if startTime's never been set, set it:
+  if (startTime == 0) startTime = epoch;
+  // set the RTC:
   rtc.setEpoch(epoch);
   Serial.println(getISOTimeString());
   IPAddress ip = WiFi.localIP();
   Serial.print(ip);
   Serial.print("  Signal Strength: ");
   Serial.println(WiFi.RSSI());
+}
+
+
+// get the microcontroller's uptime. This is useful to check
+// if the microcontroller has restarted for any reason.
+String getUptime() {
+  String uptime = "";
+  unsigned long upNow = rtc.getEpoch() - startTime;
+  int upSecs = upNow % 60;
+  int upMins = upNow % 3600L / 60;
+  int upHours = upNow % 86400L / 3600;
+  int upDays = upNow % 31556926L / 86400L;
+  if (upDays <= 9) uptime += "0";
+  uptime += upDays;
+  uptime += " days, ";
+  if (upHours <= 9) uptime += "0";
+  uptime += upHours;
+  uptime += ": ";
+  if (upMins <= 9) uptime += "0";
+  uptime += upMins;
+  uptime += ": ";
+  if (upSecs <= 9) uptime += "0";
+  uptime += upSecs;
+
+  return uptime;
 }

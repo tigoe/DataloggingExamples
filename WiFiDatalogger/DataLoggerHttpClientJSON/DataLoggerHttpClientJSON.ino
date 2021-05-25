@@ -17,7 +17,7 @@
    http://librarymanager/All#ECCX08 (for the crypto chip)
 
   created 18 Feb 2019
-  modified 24 May 2021
+  modified 25 May 2021
   by Tom Igoe
 */
 // include required libraries and config files
@@ -53,6 +53,9 @@ const char contentType[] = "application/json";
 HttpClient client(netSocket, server, port);
 // initialize RTC:
 RTCZero rtc;
+// time that the sketch started:
+unsigned long startTime = 0;
+
 // a JSON variable for the body of your requests:
 JSONVar body;
 
@@ -72,7 +75,6 @@ String uid;
 
 void setup() {
   Serial.begin(9600);              // initialize serial communication
-  pinMode(LED_BUILTIN, OUTPUT);
   // if serial monitor is not open, wait 3 seconds:
   if (!Serial) delay(3000);
   // start the realtime clock:
@@ -91,7 +93,6 @@ void setup() {
 void loop() {
   // if you disconnected from the network, reconnect:
   if (WiFi.status() != WL_CONNECTED) {
-    digitalWrite(LED_BUILTIN, LOW);
     connectToNetwork();
   }
 
@@ -132,9 +133,9 @@ void loop() {
 }
 
 /*
- readSensor. You could replace this with any sensor, as long as 
+  readSensor. You could replace this with any sensor, as long as
   you put the results into the body JSON object
- */
+*/
 void readSensor() {
   // get lux and color temperature from sensor:
   uint16_t r, g, b, c, colorTemp, lux;
@@ -146,6 +147,7 @@ void readSensor() {
   body["dateTime"] = getISOTimeString();
   body["lux"] = lux;
   body["ct"] = colorTemp;
+  body["uptime"] = getUptime();
 }
 
 // gets an ISO8601-formatted string of the current time:
@@ -181,9 +183,7 @@ void connectToNetwork() {
     WiFi.begin(SECRET_SSID, SECRET_PASS);
     delay(2000);
   }
-  Serial.println("connected to: " + String(SECRET_SSID));
-  // You're connected, turn on the LED:
-  digitalWrite(LED_BUILTIN, HIGH);
+  Serial.println("connected.");
 
   // set the time from the network:
   unsigned long epoch;
@@ -192,11 +192,37 @@ void connectToNetwork() {
     epoch = WiFi.getTime();
     delay(2000);
   } while (epoch == 0);
-
+  // if startTime's never been set, set it:
+  if (startTime == 0) startTime = epoch;
+  // set the RTC:
   rtc.setEpoch(epoch);
   Serial.println(getISOTimeString());
   IPAddress ip = WiFi.localIP();
   Serial.print(ip);
   Serial.print("  Signal Strength: ");
   Serial.println(WiFi.RSSI());
+}
+
+// get the microcontroller's uptime. This is useful to check
+// if the microcontroller has restarted for any reason.
+String getUptime() {
+  String uptime = "";
+  unsigned long upNow = rtc.getEpoch() - startTime;
+  int upSecs = upNow % 60;
+  int upMins = upNow % 3600L / 60;
+  int upHours = upNow % 86400L / 3600;
+  int upDays = upNow % 31556926L / 86400L;
+  if (upDays <= 9) uptime += "0";
+  uptime += upDays;
+  uptime += " days, ";
+  if (upHours <= 9) uptime += "0";
+  uptime += upHours;
+  uptime += ": ";
+  if (upMins <= 9) uptime += "0";
+  uptime += upMins;
+  uptime += ": ";
+  if (upSecs <= 9) uptime += "0";
+  uptime += upSecs;
+
+  return uptime;
 }

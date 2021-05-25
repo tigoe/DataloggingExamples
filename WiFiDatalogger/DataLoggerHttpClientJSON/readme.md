@@ -11,6 +11,7 @@ Data that the client sends:
 * uid - a unique 9-byte ID, sent as a hexadecimal ASCII string like so: `AA00BB11CC22DD33EE`
 * lux - a reading of illuminance in lux, taken from a TCS34725 sensor
 * ct - a reading of color temperature in degrees Kelvin, taken from the same sensor. 
+* uptime - the time since the realtime clock was first set. This can be useful to check if the microcontroller has been reset. 
 
 The data is stored in a JSON object called `body`, declared like so:
 

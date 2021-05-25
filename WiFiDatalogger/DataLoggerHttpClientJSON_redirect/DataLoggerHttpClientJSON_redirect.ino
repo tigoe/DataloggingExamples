@@ -56,6 +56,7 @@ const char contentType[] = "application/json";
 HttpClient client(netSocket, server, port);
 // initialize RTC:
 RTCZero rtc;
+unsigned long startTime = 0;
 // a JSON variable for the body of your requests:
 JSONVar body;
 

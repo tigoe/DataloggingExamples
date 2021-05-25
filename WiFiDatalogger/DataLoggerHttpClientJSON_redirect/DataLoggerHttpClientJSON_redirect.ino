@@ -273,10 +273,10 @@ String getUptime() {
   uptime += " days, ";
   if (upHours <= 9) uptime += "0";
   uptime += upHours;
-  uptime += ": ";
+  uptime += ":";
   if (upMins <= 9) uptime += "0";
   uptime += upMins;
-  uptime += ": ";
+  uptime += ":";
   if (upSecs <= 9) uptime += "0";
   uptime += upSecs;
 

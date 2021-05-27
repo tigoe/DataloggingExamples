@@ -10,6 +10,8 @@
 
   This client works with the google sheets datalogger found in this repository
 
+  This version uses no Strings, since it's not displaying anywhere
+
   Works with MKR1010, MKR1000, Nano 33 IoT
   Uses the following libraries:
    http://librarymanager/All#WiFi101  // use this for MKR1000
@@ -48,7 +50,7 @@ const char server[] = SECRET_SERVER;
 // Server port. For HTTP instead of HTTPS, use 80 instead of 443:
 const int port = 443;
 // API route (fill in from Google Scripts):
-String route = "/macros/s/AKfycbysoDKuDvbf0lDRYh1EwEpyKEP0mckc45g2Is2_UDgy5IR-2S5n61Jm7GSgMIBnanZaAA/exec";
+const char route[] = "/macros/s/AKfycbysoDKuDvbf0lDRYh1EwEpyKEP0mckc45g2Is2_UDgy5IR-2S5n61Jm7GSgMIBnanZaAA/exec";
 // set the content type:
 const char contentType[] = "application/json";
 
@@ -57,6 +59,7 @@ HttpClient client(netSocket, server, port);
 // initialize RTC:
 RTCZero rtc;
 unsigned long startTime = 0;
+
 // a JSON variable for the body of your requests:
 JSONVar body;
 
@@ -69,10 +72,6 @@ int sendInterval = 1;
 // initialize the light sensor:
 Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_700MS, TCS34725_GAIN_1X);
 
-// a unique ID string for this client.
-// since you're using the ECCX08 chip, the ID will be
-//a 9-byte number in hexadecimal format:
-String uid;
 
 void setup() {
   Serial.begin(9600);              // initialize serial communication
@@ -83,10 +82,12 @@ void setup() {
   // start the crypto chip and use its serial number
   // as a unique ID:
   ECCX08.begin();
-  uid = ECCX08.serialNumber();
 
+  // a unique ID string for this client.
+  // since you're using the ECCX08 chip, the ID will be
+  // a 9-byte number in hexadecimal format:
   // add it to the body JSON for the requests to the server:
-  body["uid"] = uid;
+  body["uid"] = ECCX08.serialNumber();
   // attempt to connect to network:
   connectToNetwork();
 }
@@ -104,7 +105,7 @@ void loop() {
       // read the sensor
       readSensor();
       // print latest reading, for reference:
-      Serial.println(JSON.stringify(body));
+      if (Serial) Serial.println(JSON.stringify(body));
       // make a post request:
       client.post(route, contentType, JSON.stringify(body));
     }
@@ -114,8 +115,10 @@ void loop() {
   if (client.available()) {
     // read the status code of the response
     int statusCode = client.responseStatusCode();
-    Serial.print("Status code: ");
-    Serial.println(statusCode);
+    if (Serial) {
+      Serial.print("Status code: ");
+      Serial.println(statusCode);
+    }
     // (google sheets returns a 302 redirect, for more on this
     // see https://developers.google.com/apps-script/guides/content#redirects
     if (statusCode == 302) {
@@ -143,35 +146,10 @@ void readSensor() {
   lux = tcs.calculateLux(r, g, b);
 
   // update elements of request body JSON object:
-  body["dateTime"] = getISOTimeString();
+  body["dateTime"] = rtc.getEpoch();
   body["lux"] = lux;
   body["ct"] = colorTemp;
-  body["uptime"] = getUptime();
-}
-
-// gets an ISO8601-formatted string of the current time:
-String getISOTimeString() {
-  // ISO8601 string: yyyy-mm-ddThh:mm:ssZ
-  String timestamp = "20";
-  if (rtc.getYear() <= 9) timestamp += "0";
-  timestamp += rtc.getYear();
-  timestamp += "-";
-  if (rtc.getMonth() <= 9) timestamp += "0";
-  timestamp += rtc.getMonth();
-  timestamp += "-";
-  if (rtc.getDay() <= 9) timestamp += "0";
-  timestamp += rtc.getDay();
-  timestamp += "T";
-  if (rtc.getHours() <= 9) timestamp += "0";
-  timestamp += rtc.getHours();
-  timestamp += ":";
-  if (rtc.getMinutes() <= 9) timestamp += "0";
-  timestamp += rtc.getMinutes();
-  timestamp += ":";
-  if (rtc.getSeconds() <= 9) timestamp += "0";
-  timestamp += rtc.getSeconds();
-  timestamp += "Z";
-  return timestamp;
+  body["uptime"] = rtc.getEpoch() - startTime;
 }
 
 /*
@@ -204,8 +182,10 @@ int redirectRequest() {
         tempRoute = redirect.substring(start, end);
 
         // print out the response server and route:
-        Serial.println(tempServer);
-        Serial.println(tempRoute);
+        if (Serial) {
+          Serial.println(tempServer);
+          Serial.println(tempRoute);
+        }
       }
     }
   }
@@ -216,12 +196,14 @@ int redirectRequest() {
   // change from POST to GET, per Google's instructions:
   redirectClient.get(tempRoute);
   tempResponseCode = redirectClient.responseStatusCode();
-  // print out the response:
-  Serial.print("Status code: ");
-  Serial.println(tempResponseCode);
-  String response = redirectClient.responseBody();
-  Serial.print("body: ");
-  Serial.println(response);
+  // print out the response and body:
+  if (Serial) {
+    Serial.print("Status code: ");
+    Serial.println(tempResponseCode);
+    String response = redirectClient.responseBody();
+    Serial.print("body: ");
+    Serial.println(response);
+  }
   redirectClient.stop();
   return tempResponseCode;
 }
@@ -230,17 +212,20 @@ int redirectRequest() {
 void connectToNetwork() {
   // try to connect to the network:
   while ( WiFi.status() != WL_CONNECTED) {
-    Serial.println("Attempting to connect to: " + String(SECRET_SSID));
+    if (Serial) {
+      Serial.print("Attempting to connect to: ");
+      Serial.println(SECRET_SSID);
+    }
     //Connect to WPA / WPA2 network:
     WiFi.begin(SECRET_SSID, SECRET_PASS);
     delay(2000);
   }
-  Serial.println("connected to: " + String(SECRET_SSID));
- 
+  if (Serial) Serial.println("connected");
+
   // set the time from the network:
   unsigned long epoch;
   do {
-    Serial.println("Attempting to get network time");
+    if (Serial) Serial.println("Attempting to get network time");
     epoch = WiFi.getTime();
     delay(2000);
   } while (epoch == 0);
@@ -248,34 +233,11 @@ void connectToNetwork() {
   if (startTime == 0) startTime = epoch;
   // set the RTC:
   rtc.setEpoch(epoch);
-  Serial.println(getISOTimeString());
-  IPAddress ip = WiFi.localIP();
-  Serial.print(ip);
-  Serial.print("  Signal Strength: ");
-  Serial.println(WiFi.RSSI());
-}
-
-
-// get the microcontroller's uptime. This is useful to check
-// if the microcontroller has restarted for any reason.
-String getUptime() {
-  String uptime = "";
-  unsigned long upNow = rtc.getEpoch() - startTime;
-  int upSecs = upNow % 60;
-  int upMins = upNow % 3600L / 60;
-  int upHours = upNow % 86400L / 3600;
-  int upDays = upNow % 31556926L / 86400L;
-  if (upDays <= 9) uptime += "0";
-  uptime += upDays;
-  uptime += " days, ";
-  if (upHours <= 9) uptime += "0";
-  uptime += upHours;
-  uptime += ":";
-  if (upMins <= 9) uptime += "0";
-  uptime += upMins;
-  uptime += ":";
-  if (upSecs <= 9) uptime += "0";
-  uptime += upSecs;
-
-  return uptime;
+  if (Serial) {
+    Serial.println(rtc.getEpoch());
+    IPAddress ip = WiFi.localIP();
+    Serial.print(ip);
+    Serial.print("  Signal Strength: ");
+    Serial.println(WiFi.RSSI());
+  }
 }

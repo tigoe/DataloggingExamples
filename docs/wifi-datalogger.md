@@ -1,6 +1,6 @@
 # Datalogging to a Server via WiFi
 
-The examples described here log data to a server via WiFi using a network-enabled client. These should all work on the network-enabled MKR boards, along with the Nano 33 IoT and other SAMD-based boards which have network capability. They can likely work on Espressif-based boards (ESP32, ESP8266) with some modification.
+The examples described here log data to a server via WiFi using a network-enabled microcontroller as a datalogging client. These examples should all work on the network-enabled MKR boards, along with the Nano 33 IoT and other SAMD-based boards which have network capability. They can likely work on Espressif-based boards (ESP32, ESP8266) with some modification.
 
 [This collection](https://github.com/tigoe/DataloggingExamples/tree/master/WiFiDatalogger) includes [ArduinoHttpClient](https://www.arduino.cc/reference/en/libraries/arduinohttpclient/) examples along with [node.js](https://nodejs.org/) server scripts. There are also instructions for how to log data to a Google Sheets spreadsheet using [Google Apps script](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app), thanks to Arnab Chakravarty. 
 
@@ -9,7 +9,7 @@ To make this work, you'll need:
 * To be comfortable programming Arduinos
 * A WiFi-connected Arduino like the Nano 33 IoT, MKR 1010, or MKR1000. 
 * A simple input sensor (pushbutton or knob is fine)
-* To be comfortable with programming in JavaScript, as I'll be introducing some [node.js](https://nodejs.org)
+* To be comfortable with programming in JavaScript in some [node.js](https://nodejs.org)
 * a free [Glitch.com](https://www.glitch.com) account
 
 Background material you might want to review beforehand:
@@ -22,7 +22,7 @@ For other WiFi  and ArduinoHttpClient examples, see [this repository](https://ti
 
 ## Arduino HTTP Client for Logging
 
-The central app in this collection is the [DataLoggerHttpClientJSON](https://github.com/tigoe/DataloggingExamples/tree/master/WiFiDatalogger/DataLoggerHttpClientJSON). It is an Arduino-based client, written for the SAMD boards (MKR boards, Nano 33 IoT). It reads a sensor, saves the readings in a JSON object using the [Arduino_JSON](https://github.com/arduino-libraries/Arduino_JSON) library, and makes HTTPS requests to a server once a minute. 
+The central app in this collection is the [DataLoggerHttpClientJSON](https://github.com/tigoe/DataloggingExamples/tree/master/WiFiDatalogger/DataLoggerHttpClientJSON) client. It is an Arduino-based client, written for the SAMD boards (MKR boards, Nano 33 IoT). It reads a sensor, saves the readings in a JSON object using the [Arduino_JSON](https://github.com/arduino-libraries/Arduino_JSON) library, and makes HTTPS requests to a server once a minute. 
 
 This example uses a light and color sensor, the AMS [TCS34725](https://ams.com/tcs34725), using [Adafruit's library](https://github.com/adafruit/Adafruit_TCS34725) for it. It sends the illuminance levels in lux, and the color temperature levels in degrees Kelvin. You can replace it with any sensor you want, however.  
 
@@ -30,7 +30,7 @@ In addition to the sensor data, the client also sends a timestamp, generated fro
 
 The realtime clock allows you to timestamp the data on the client. If you're using a board without a realtime clock, you could timestamp the data on the server side instead. The node.js scripts here do that, in case the client doesn't provide a timestamp. 
 
-The uid allows the servers to filter out requests from clients that it doesn't already know. You could replace this with the MAC address of your WiFi radio or a randomly assigned unique ID number if you're not using the crypto chip.
+The uid allows the server to filter out requests from clients that it doesn't already know. Any server on a public address always gets random requests, so it's a good idea to filter out the ones you don't want. You don't have to use the Arduino's crypto chip for this. You could replace this with the MAC address of your WiFi radio or a randomly assigned unique ID number if you're not using the crypto chip.
 
 There are a few variations on the client in this collection:
 
@@ -42,8 +42,8 @@ There are a few variations on the client in this collection:
 
 When you're setting up a microcontroller to be a sensor datalogging client, there are a few things to consider: 
 * What is the sensor data you're gathering?
-* When was each sensor reading gathered?
-* Where was it gathered?
+* When was each sensor reading taken?
+* Where was it taken?
 * Who gathered it?
 
 #### What Data Are You Gathering?
@@ -56,7 +56,7 @@ Networked computers all use [Coordinated Universal Time (UTC)](https://www.timea
 
 ### Where Was the Data Gathered?
 
-You could attach technology to determine location, but the simplest way to handle this is to name the location in your data.  This leads to:
+Unless you're using A GPS reader or some other machine-based way to determine your location, the simplest way is just to name the location in your data. Adding a parameter to your data with the location name is a good way to start.
 
 #### Who (or What) Gathered the Data?
 
@@ -64,7 +64,7 @@ It's a good idea to always include a unique ID in your sensor readings so you ca
 
 #### Set a Unique ID
 
-The node.js client filters requests by checking a unique ID (uid) in the request. If the UID that the client sends doesn't match one of the ones in a list called `knownClients`, the server responds with a 403 error and the data is not saved. 
+The servers described below filter requests by checking a unique ID (uid) in the request. If the UID that the client sends doesn't match one of the ones in a list called `knownClients`, the server responds with a 403 error and the data is not saved. 
 
 You'll need to fill in a uid for your microcontroller for this to work. From the Nano 33IoT or the MKR boards, you can get a uid from the on-board crypto chip using the [ECCx08 crypto chip](https://www.arduino.cc/reference/en/libraries/arduinoeccx08/) library like so:
 
@@ -76,7 +76,7 @@ You'll need to fill in a uid for your microcontroller for this to work. From the
   Serial.println(uid);
   ````
 
-  If you prefer not to use the crypto chip, you can use the MAC address of the WiFi radio. Here is a snippet of code that reads the MAC address, formats it into a hexadecimal string, and puts it in the JSON object to send to the server:
+  If you prefer not to use the crypto chip, you can use the MAC address of the WiFi radio. Here is a snippet of code that reads the MAC address, formats it into a hexadecimal string, and puts it in the data to send to the server:
 
   ````arduino
   // JSON object for the data to be sent:
@@ -111,7 +111,7 @@ You'll need to fill in a uid for your microcontroller for this to work. From the
 
 ## Datalogging Server Applications
 
-This client was originally written to communicate with an HTTP server written in node.js. Since the communications between server and client are all HTTP, it can be adapted to communicate with other web-based apps with little change.  
+The clients above were originally written to communicate with an HTTP server written in node.js. Since the communications between server and client are all HTTP, the client can be adapted to communicate with other web-based apps with little change.  Following are two servers which can work with the clients above.
 
 ### Node.js Datalogger
 
@@ -127,7 +127,7 @@ The JSON data in the POST request should look like this:
 ````js
 {
    "uid": client ID,
-  "timestamp": date and time in ISO8601 format
+  "timeStamp": date and time in ISO8601 format
 }
 ````
 
@@ -145,8 +145,7 @@ There are two versions of the server, one of which saves the incoming data in an
 
 _Figure 2. System diagram of the Google apps script datalogger_
 
-
-[Google Apps script](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app) allows you to save data to a Google Sheets spreadsheet via HTTP. Arnab Chakravarty has a [tutorial on how it works](https://github.com/AbolTaabol/Arduino-GoogleSheet_Logger). For more background on Google Apps scripts, see the link above, or [this link](https://developers.google.com/apps-script/guides/web) which explains the web functions `doGet()` and `doPost()`, which are the main functions of this example. 
+The [Google Apps script](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app) in this repository allows you to save data to a Google Sheets spreadsheet via HTTP. Arnab Chakravarty has a [tutorial on how it works](https://github.com/AbolTaabol/Arduino-GoogleSheet_Logger). For more background on Google Apps scripts, see the link above, or [this link](https://developers.google.com/apps-script/guides/web) which explains the web functions `doGet()` and `doPost()`, which are the main functions of this example. 
 
 The structure of the system is similar to the node server, and is diagrammed in Figure 2. The microcontroller only has to change the URL and API route that it's sending data to, in order to send data to the Google apps script. The script takes the place of the node.js server, and writes to a Google Sheets spreadsheet instead of a text file.
 

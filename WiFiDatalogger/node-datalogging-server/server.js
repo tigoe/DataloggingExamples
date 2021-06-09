@@ -8,6 +8,7 @@
   see readme.md for details of the API
   
   created 2 Apr 2021
+  updated 8 Jun 2021
   by Tom Igoe
 */
 
@@ -15,10 +16,10 @@
 const express = require("express");
 // make a local instance of it:
 const server = express();
-// include body-parser:
+// include body-parser so we can read the body of a HTTP request:
 const bodyParser = require("body-parser");
 // set up an array of known users' unique IDs (uids):
-let knownClients = ["0123FAF16D37AF36EE", "AA00BB11CC22DD33EE"];
+let knownClients = ["01237139E45EC4AAEE","3c71bf87c2b0"];
 
 // serve static files from /public:
 server.use("/", express.static("public"));
@@ -51,9 +52,10 @@ function getData(request, response) {
   // send all records from startDate to endDate: 
   // get the existing records. This is where we'd make a call
   // to a database if we were using one:
+  console.log(records.length);
   for (var thisRecord of records) {
     // get each line's date
-    let recordDate = new Date(thisRecord.dateTime);
+    let recordDate = new Date(thisRecord.timeStamp);
     console.log(thisRecord);
     // if the date is later than startDate,
     // add it to the response string

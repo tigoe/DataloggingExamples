@@ -4,6 +4,20 @@ The examples described here log data to a server via WiFi using a network-enable
 
 [This collection](https://github.com/tigoe/DataloggingExamples/tree/master/WiFiDatalogger) includes [ArduinoHttpClient](https://www.arduino.cc/reference/en/libraries/arduinohttpclient/) examples along with [node.js](https://nodejs.org/) server scripts. There are also instructions for how to log data to a Google Sheets spreadsheet using [Google Apps script](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app), thanks to Arnab Chakravarty. 
 
+To make this work, you'll need:
+
+* To be comfortable programming Arduinos
+* A WiFi-connected Arduino like the Nano 33 IoT, MKR 1010, or MKR1000. 
+* A simple input sensor (pushbutton or knob is fine)
+* To be comfortable with programming in JavaScript, as I'll be introducing some [node.js](https://nodejs.org)
+* a free [Glitch.com](https://www.glitch.com) account
+
+Background material you might want to review beforehand:
+
+* [Wifinina_startup](https://vimeo.com/showcase/6916443/video/400951453)
+* [WiFI_status](https://vimeo.com/showcase/6916443/video/401078236)
+* Read [A Gentle Introduction to HTTP](https://itp.nyu.edu/networks/explanations/a-gentle-introduction-to-http/) by Maria del pilar Gomez Ruiz to get an idea of how web clients and servers talk to each other. 
+
 For other WiFi  and ArduinoHttpClient examples, see [this repository](https://tigoe.github.io/Wifi101_examples/). For other Node examples, see [this repository](https://github.com/tigoe/NodeExamples/).
 
 ## Arduino HTTP Client for Logging
@@ -12,9 +26,9 @@ The central app in this collection is the [DataLoggerHttpClientJSON](https://git
 
 This example uses a light and color sensor, the AMS [TCS34725](https://ams.com/tcs34725), using [Adafruit's library](https://github.com/adafruit/Adafruit_TCS34725) for it. It sends the illuminance levels in lux, and the color temperature levels in degrees Kelvin. You can replace it with any sensor you want, however.  
 
-In addition to the sensor data, the client also sends a timestamp, generated from the Arduino's [realtime clock](https://www.arduino.cc/reference/en/libraries/rtczero/), and a unique ID (uid), read from the board's [ECCx08 crypto chip](https://www.arduino.cc/reference/en/libraries/arduinoeccx08/). 
+In addition to the sensor data, the client also sends a timestamp, generated from the Arduino's [realtime clock](https://www.arduino.cc/reference/en/libraries/rtczero/), and a unique ID (uid), read from the board's [ECCx08 crypto chip](https://www.arduino.cc/reference/en/libraries/arduinoeccx08/). As an alternative to the crypto chip, uou can use the Arduino's WiFi MAC address as a unique ID.
 
-The realtime clock allows you to timestamp the data on the client. If you're using a board without a realtime clock, you could timestamp the data on the server side instead. 
+The realtime clock allows you to timestamp the data on the client. If you're using a board without a realtime clock, you could timestamp the data on the server side instead. The node.js scripts here do that, in case the client doesn't provide a timestamp. 
 
 The uid allows the servers to filter out requests from clients that it doesn't already know. You could replace this with the MAC address of your WiFi radio or a randomly assigned unique ID number if you're not using the crypto chip.
 
@@ -47,7 +61,11 @@ You can also include any sensor characteristics that you want to add. The Arduin
 
 This server can be run on any host that can run node.js. You can see it running on [Glitch.com](https://glitch.com/) at [this link](https://glitch.com/edit/#!/tigoe-datalogger). It also includes a web-based client, as a test example. 
 
-The node.js client filters requests by checking a uid in the JSON body of the POST request. If the UID that the client sends doesn't match one of the ones in a list called `knownClients`, the server responds with a 403 error and the data is not saved. You'll need to fill in the uid of your microcontroller for this to work. You can get it using the [ECCx08 crypto chip](https://www.arduino.cc/reference/en/libraries/arduinoeccx08/) library like so:
+#### Set a Unique ID
+
+The node.js client filters requests by checking a unique ID (uid) in the request. If the UID that the client sends doesn't match one of the ones in a list called `knownClients`, the server responds with a 403 error and the data is not saved. 
+
+You'll need to fill in a uid for your microcontroller for this to work. From the Nano 33IoT or the MKR boards, you can get a uid from the on-board crypto chip using the [ECCx08 crypto chip](https://www.arduino.cc/reference/en/libraries/arduinoeccx08/) library like so:
 
 ````arduino
   // start the crypto chip and use its serial number
@@ -55,6 +73,38 @@ The node.js client filters requests by checking a uid in the JSON body of the PO
   ECCX08.begin();
   String uid = ECCX08.serialNumber();
   Serial.println(uid);
+  ````
+
+  If you prefer not to use the crypto chip, you can use the MAC address of the WiFi radio. Here is a snippet of code that reads the MAC address, formats it into a hexadecimal string, and puts it in the JSON object to send to the server:
+
+  ````arduino
+  // JSON object for the data to be sent:
+  JSONVar body; 
+  // 6-byte array for WiFi MAC address:
+  byte mac[6];  
+  
+  ....
+  
+  // put the MAC address into the array:
+  WiFi.macAddress(mac);
+  // convert it to a String:
+  String addressString = "";
+  for (int i = 5; i >= 0; i--) {
+    if (mac[i] < 16) {
+      // if the byte is less than 16, add a 0 placeholder:
+      addressString += "0";
+    }
+    // add the hexadecimal representation of this byte
+    // to the address string:
+    addressString += String(mac[i], HEX);
+  }
+
+  // add the MAC address string to the JSON as an ID:
+  body["uid"] = addressString;
+  if (Serial) {
+    Serial.print("MAC: ");
+    Serial.println(body["uid"]);
+  }
   ````
 
 There are two versions of the server, one of which saves the incoming data in an array, and another which appends the data to a text file. Both of these are simpler substitutes for a database. The data from [server-filewriter](https://github.com/tigoe/DataloggingExamples/blob/master/WiFiDatalogger/node-datalogging-server/server-fileWriter.js) script is more persistent because it's saved to a separate file. The data from the basic [server](https://github.com/tigoe/DataloggingExamples/blob/master/WiFiDatalogger/node-datalogging-server/server.js) script will be lost when you stop the script running.  

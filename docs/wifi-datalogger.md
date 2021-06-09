@@ -15,7 +15,7 @@ To make this work, you'll need:
 Background material you might want to review beforehand:
 
 * [Wifinina_startup](https://vimeo.com/showcase/6916443/video/400951453)
-* [WiFI_status](https://vimeo.com/showcase/6916443/video/401078236)
+* [WiFi_status](https://vimeo.com/showcase/6916443/video/401078236)
 * Read [A Gentle Introduction to HTTP](https://itp.nyu.edu/networks/explanations/a-gentle-introduction-to-http/) by Maria del pilar Gomez Ruiz to get an idea of how web clients and servers talk to each other. 
 
 For other WiFi  and ArduinoHttpClient examples, see [this repository](https://tigoe.github.io/Wifi101_examples/). For other Node examples, see [this repository](https://github.com/tigoe/NodeExamples/).
@@ -33,33 +33,34 @@ The realtime clock allows you to timestamp the data on the client. If you're usi
 The uid allows the servers to filter out requests from clients that it doesn't already know. You could replace this with the MAC address of your WiFi radio or a randomly assigned unique ID number if you're not using the crypto chip.
 
 There are a few variations on the client in this collection:
-* [DataLoggerHttpClientJSON](https://github.com/tigoe/DataloggingExamples/tree/master/WiFiDatalogger/DataLoggerHttpClientJSON) - the original, written for the node.js server, but works with the Google Sheets script as well
+
+* [DataLoggerHttpClientJSON](https://github.com/tigoe/DataloggingExamples/tree/master/WiFiDatalogger/DataLoggerHttpClientJSON) - the original, written for the node.js server.
+* [DataLoggerHttpClientJSON_MAC](https://github.com/tigoe/DataloggingExamples/tree/master/WiFiDatalogger/DataLoggerHttpClientJSON_MAC) - This version sends the WiFi radio's MAC address as the UID, so you don't need the crypto library.
 * [DataLoggerHttpClientJSON_redirect](https://github.com/tigoe/DataloggingExamples/tree/master/WiFiDatalogger/DataLoggerHttpClientJSON_redirect) - a variation that handles the Google apps script redirect. See the section on the Google Sheets Datalogger for more on this. 
 
-## Datalogging Server Applications
+### Minimum Parameters To Log
 
-This client was originally written to communicate with an HTTP server written in node.js. Since the communications between server and client are all HTTP, it can be adapted to communicate with other web-based apps with little change.  
+When you're setting up a microcontroller to be a sensor datalogging client, there are a few things to consider: 
+* What is the sensor data you're gathering?
+* When was each sensor reading gathered?
+* Where was it gathered?
+* Who gathered it?
 
-### Node.js Datalogger
+#### What Data Are You Gathering?
+The first question, what is being gathered, will depend on your particular case, of course. The examples given here were written to gather lighting data: illuminance and color temperature. Your characteristics will vary.
 
-![system diagram of a wifi-datalogger, as described below.](images/wifi-datalogger.png)
+#### When Is Each Set of Sensor Readings Taken?
+It's useful to attach a time stamp to each set of sensor readings, and it's useful to use some time standards. The simplest solution if you're logging sensor data to a web server via WiFi, the simplest solution is to let the server time stamp each reading. However, there may be reasons to time stamp locally by the microcontroller. If that is the case, then you want to attach a real-time clock to the microcontroller, or use a controller with one built-in, like the Nano 33 IoT or the MKR boards. The [RTCZero]((https://www.arduino.cc/reference/en/libraries/rtczero/)) library lets you access that realtime clock, and the WiFi libraries let you set the clock by making a network time server request, using the command `WiFi.getTime()`. 
 
-_Figure 1. System diagram of the node datalogging server_
+Networked computers all use [Coordinated Universal Time (UTC)](https://www.timeanddate.com/worldclock/timezone/utc) these days, and most operating systems count time using the [Unix Epoch Time](https://www.epochconverter.com/), which counts the number of seconds since January 1, 1970. The international standard for representing time as a string is the [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) standard, in which dates look like this: `2021-06-09T14:51:31Z`. The advantage of using these standards is that when you're transmitting time information from client to server, both sides can translate each others' times, and many programming environments include tools for calculating time differences in UTC. 
 
-The [node-datalogging-server](https://github.com/tigoe/DataloggingExamples/tree/master/WiFiDatalogger/node-datalogging-server) has a RESTful API that accepts data formatted as a JSON string in the body of a POST request. The client microcontroller reads its sensors, then sends the readings in a POST request with a JSON body to the server. One version of the server writes the JSON string to a text file, as diagrammed in Figure 1. 
+### Where Was the Data Gathered?
 
-You can also read all the records of the server by making a GET request.
+You could attach technology to determine location, but the simplest way to handle this is to name the location in your data.  This leads to:
 
-The JSON data in the POST request should look like this:
-````js
-{ "uid": client ID, a 9-byte ID in hexadecimal format,
-  "date": date in ISO8601 format}
-````
-The [ISO8601 time format](https://en.wikipedia.org/wiki/ISO_8601) looks like this: `2021-05-24T10:31:14Z`
+#### Who (or What) Gathered the Data?
 
-You can also include any sensor characteristics that you want to add. The Arduino examples in this collection send light and color temperature levels in lux (`lux`) and degrees Kelvin (`ct`), respectively. The server doesn't check the names of the characteristics in the JSON data, so you can add anything you want. 
-
-This server can be run on any host that can run node.js. You can see it running on [Glitch.com](https://glitch.com/) at [this link](https://glitch.com/edit/#!/tigoe-datalogger). It also includes a web-based client, as a test example. 
+It's a good idea to always include a unique ID in your sensor readings so you can identify the device that took the reading, independent of the location or the time. 
 
 #### Set a Unique ID
 
@@ -94,6 +95,7 @@ You'll need to fill in a uid for your microcontroller for this to work. From the
       // if the byte is less than 16, add a 0 placeholder:
       addressString += "0";
     }
+
     // add the hexadecimal representation of this byte
     // to the address string:
     addressString += String(mac[i], HEX);
@@ -106,6 +108,34 @@ You'll need to fill in a uid for your microcontroller for this to work. From the
     Serial.println(body["uid"]);
   }
   ````
+
+## Datalogging Server Applications
+
+This client was originally written to communicate with an HTTP server written in node.js. Since the communications between server and client are all HTTP, it can be adapted to communicate with other web-based apps with little change.  
+
+### Node.js Datalogger
+
+![system diagram of a wifi-datalogger, as described below.](images/wifi-datalogger.png)
+
+_Figure 1. System diagram of the node datalogging server_
+
+The [node-datalogging-server](https://github.com/tigoe/DataloggingExamples/tree/master/WiFiDatalogger/node-datalogging-server) has a RESTful API that accepts data formatted as a JSON string in the body of a POST request. The client microcontroller reads its sensors, then sends the readings in a POST request with a JSON body to the server. One version of the server writes the JSON string to a text file, as diagrammed in Figure 1. 
+
+You can also read all the records of the server by making a GET request.
+
+The JSON data in the POST request should look like this:
+````js
+{
+   "uid": client ID,
+  "timestamp": date and time in ISO8601 format
+}
+````
+
+The [ISO8601 time format](https://en.wikipedia.org/wiki/ISO_8601) looks like this: `2021-05-24T10:31:14Z`
+
+You can also include any sensor characteristics that you want to add. The Arduino examples in this collection send light and color temperature levels in lux (`lux`) and degrees Kelvin (`ct`), respectively. The server doesn't check the names of the characteristics in the JSON data, so you can add anything you want. 
+
+This server can be run on any host that can run node.js. You can see it running on [Glitch.com](https://glitch.com/) at [this link](https://glitch.com/edit/#!/tigoe-datalogger). It also includes a web-based client, as a test example. 
 
 There are two versions of the server, one of which saves the incoming data in an array, and another which appends the data to a text file. Both of these are simpler substitutes for a database. The data from [server-filewriter](https://github.com/tigoe/DataloggingExamples/blob/master/WiFiDatalogger/node-datalogging-server/server-fileWriter.js) script is more persistent because it's saved to a separate file. The data from the basic [server](https://github.com/tigoe/DataloggingExamples/blob/master/WiFiDatalogger/node-datalogging-server/server.js) script will be lost when you stop the script running.  
 

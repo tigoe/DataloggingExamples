@@ -22,3 +22,4 @@ WiFiDatalogger/DataLoggerHttpClientJSONwithSD/arduino_secrets.h
 WiFiDatalogger/DataLoggerHttpClientJSON_redirect_nostrings/arduino_secrets.h
 WiFiDatalogger/DataLoggerHttpClientJSON_redirect_04/arduino_secrets.h
 WiFiDatalogger/DataLoggerHttpClientJSON_MAC/arduino_secrets.h
+WiFiDatalogger/DataLoggerHttpClientJSON_MAC/arduino_secrets.h

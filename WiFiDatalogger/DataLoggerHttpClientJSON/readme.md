@@ -7,7 +7,7 @@ This Arduino sketch was written for the WiFi-enabled SAMD-based Arduino models, 
 This sketch reads a sensor once a minute and sends the readings to a sensor once a minute. The details are as follows:
 
 Data that the client sends:
-* dateTime - an ISO8601-formatted string with the date and time in GMT, like so: `2021-05-19T17:16:00Z`
+* timeStamp - an ISO8601-formatted string with the date and time in GMT, like so: `2021-05-19T17:16:00Z`
 * uid - a unique 9-byte ID, sent as a hexadecimal ASCII string like so: `AA00BB11CC22DD33EE`
 * lux - a reading of illuminance in lux, taken from a TCS34725 sensor
 * ct - a reading of color temperature in degrees Kelvin, taken from the same sensor. 

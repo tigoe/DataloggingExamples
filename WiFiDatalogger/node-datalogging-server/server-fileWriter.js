@@ -7,6 +7,7 @@
   see readme.md for details of the API
   
   created 2 Apr 2021
+  modified 8 Jun 2021
   by Tom Igoe
 */
 
@@ -17,7 +18,8 @@ const server = express();
 // include body-parser:
 const bodyParser = require("body-parser");
 // set up an array of known users' unique IDs (uids):
-let knownClients = ["0123FAF16D37AF36EE", "AA00BB11CC22DD33EE"];
+let knownClients = [
+"2462abb1e2ac"];
 
 // include filesystem utilities:
 const fs = require("fs");
@@ -73,7 +75,7 @@ function getData(request, response) {
     // make a JSON object from the line:
     var thisRecord = JSON.parse(line);
     // get the dateTime from the record:
-    var recordDate = new Date(thisRecord.dateTime);
+    var recordDate = new Date(thisRecord.timeStamp);
     console.log(thisRecord);
     // send all records from startDate to endDate:
     // if the date is between startDate and endDate,
@@ -101,6 +103,8 @@ function postData(request, response) {
 
   let record = request.body;
   if (knownClients.includes(record.uid)) {
+    // add a timestamp to the record:
+    record.local_timestamp = new Date().toISOString();
     // make a new line of text for the data file:
     let recordString = JSON.stringify(record) + "\n";
     // append the line to the file"

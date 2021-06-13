@@ -36,6 +36,7 @@
 // (use WIFiClient and port number 1883 for unencrypted connections):
 WiFiSSLClient wifi;
 MqttClient mqttClient(wifi);
+String addressString = "";
 
 // details for MQTT client:
 char broker[] = "public.cloud.shiftr.io";
@@ -73,7 +74,6 @@ void setup() {
   // array for WiFi MAC address:
   byte mac[6];
   WiFi.macAddress(mac);
-  String addressString = "";
   for (int i = 5; i >= 0; i--) {
     if (mac[i] < 16) {
       // if the byte is less than 16, add a 0 placeholder:

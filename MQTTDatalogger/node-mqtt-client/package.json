@@ -1,0 +1,27 @@
+{
+  "name": "mqtt-node-client",
+  "version": "0.0.1",
+  "description": "a node.js client for mqtt",
+  "main": "mqtt-client.js",
+  "dependencies": {
+    "mqtt": "^4.2.6",
+    "fetch":"^1.1.0"
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "repository": {
+    "url": "https://glitch.com/edit/#!/tigoe-mqtt-client"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "mqtt",
+    "node"
+  ],
+  "author": "Tom Igoe",
+  "license": "ISC"
+}

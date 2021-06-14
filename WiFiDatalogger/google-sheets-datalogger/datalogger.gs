@@ -22,7 +22,7 @@
  
   Adapted from Arnab Chakravarty's script at https://github.com/AbolTaabol/Arduino-GoogleSheet_Logger
   created 22 May 2021
-  modified 4 Jun 2021
+  modified 14 Jun 2021
   by Tom Igoe
 
 */
@@ -35,7 +35,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/XXXX/exec';
 // column for a local timestamp:
 const TIMESTAMP = 'local_timestamp';
 
- // Error codes for return result:
+// Error codes for return result:
 const NO_MATCHING_PARAMS = -1;    // client didn't send matching params
 const NO_PARAMS_SENT = -2;        // client didn't send any parameters
 const WRONG_CONTENT_TYPE = -3;    // request must be content-type: application/json
@@ -43,7 +43,7 @@ const UNKNOWN_CLIENT = -4;        // client UID not in list
 const SUCCESS = 0;              // all good, data saved
 
 // uids of known clients:
-let knownClients = ["aabbccddeeff","00aa11bb22cc"];
+let knownClients = ["AABBCCDDEEFF"];
 
 //Get the document:
 var ss = SpreadsheetApp.openByUrl(SHEET_URL);
@@ -102,12 +102,19 @@ function doPost(e){
   to the keys in data. Order of the keys in data do not matter
 */
 function insertData(requestData) {
+  // get the sheet named for the sensor module's uid:
+  let thisSheet = ss.getSheetByName(requestData.uid);
+  // if it doesn't exist, get the first sheet:
+  if (thisSheet === null) {
+    thisSheet = sheets[0];
+  }
+
   var result = 0;
   // set up a new array for the data that you want to insert:
   var insertValues = new Array();
   // get the column names in the header row. 
   // these should correspond to the key values in the data sent:
-  var colNames = sheet.getRange(1,1,1,lastCol).getValues()[0];
+  var colNames = thisSheet.getRange(1,1,1,lastCol).getValues()[0];
   
   //iterate over the data object:
   for (item in requestData) {
@@ -115,8 +122,6 @@ function insertData(requestData) {
     if (item === 'uid' && !knownClients.includes(requestData[item])) {
       return UNKNOWN_CLIENT;
     }
-
- 
 
     // get the position header row whose value corresponds to this item's key:
     var thisColumn = colNames.indexOf(item);
@@ -126,9 +131,8 @@ function insertData(requestData) {
       // some of the data will come in numerical form, particularly the 
       // time numbers, which can be sent as Unix epoch values. Look for them
       // and convert them to readable strings:
-      if (typeof requestData[item] == 'number') {
        switch (item) {
-        case 'dateTime': 
+        case 'timeStamp': 
           // convert epoch to date:
           var now = new Date(0);
           now.setUTCSeconds(requestData[item]);
@@ -144,10 +148,6 @@ function insertData(requestData) {
           insertValues[thisColumn] = requestData[item];
           break;
        } 
-      } else {
-        // if it's not a number, no conversion needed:
-        insertValues[thisColumn] = requestData[item];
-      }
     }
   }
 
@@ -162,27 +162,22 @@ function insertData(requestData) {
       insertValues[timeStampColumn] = new Date().toISOString();
     }
    //add new row to spreadsheet at the end:
-   sheet.appendRow(insertValues);
+   thisSheet.appendRow(insertValues);
    result = SUCCESS;
   } else {
     result = NO_MATCHING_PARAMS;
   }
-
   return result;
 }
 
 function convertDuration(upNow) {
-  // TODO: convert this to using JS Date calculations:
+  let upDays = Math.floor(upNow / 60 / 60 / 24);
+  let upHours = Math.floor(upNow / 60 / 60) - (upDays * 24);
+  let upMins = Math.floor(upNow / 60) - (upHours * 60)  - (upDays * 24* 60);
+  let upSecs = upNow % 60;
+
   let upTime = "";
-  // mod by 60 to get the seconds
-  let upSecs = Math.floor(upNow % 60);
-  // mod by secs in an hour / secs to get the minutes:
-  let upMins = Math.floor(upNow % 3600 / 60);
-  // mod by secs in a day / secs in a minute to get the hours:
-  let upHours = Math.floor(upNow % 86400 / 3600);
-    // mod by secs in a year / secs in a day to get the days:
-  let upDays = Math.floor(upNow % 31556926 / 86400);
-  if (upDays <= 9) upTime += "0";
+   if (upDays <= 9) upTime += "0";
   upTime += upDays;
   upTime += " days, ";
   if (upHours <= 9) upTime += "0";

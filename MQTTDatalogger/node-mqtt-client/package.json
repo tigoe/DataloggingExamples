@@ -11,7 +11,7 @@
     "node": "12.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/tigoe-mqtt-client"
+    "url": "https://github.com/tigoe/DataloggingExamples/"
   },
   "devDependencies": {},
   "scripts": {

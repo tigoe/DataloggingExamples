@@ -1,8 +1,10 @@
 # Datalogging to a Server via MQTT and WiFi
 
-The examples described here log data to a server via WiFi using a network-enabled microcontroller as a datalogging client. They are based on the [WiFi datalogging collection](wifi-datalogger), but instead of HTTP, the microcontroller clients use the [Message Queueing Telemetry Transfer (MQTT)](https://tigoe.github.io/mqtt-examples/) protocol.
+The datalogging application described here logs data to a server via WiFi using a network-enabled microcontroller as a datalogging client. It is based on the [WiFi datalogging application](wifi-datalogger), but instead of HTTP, the microcontroller clients use the [Message Queueing Telemetry Transfer (MQTT)](https://tigoe.github.io/mqtt-examples/) protocol.
 
 These examples should all work on the network-enabled MKR boards, along with the Nano 33 IoT and other SAMD-based boards which have network capability. They can likely work on Espressif-based boards (ESP32, ESP8266) with some modification.
+
+This application uses [shiftr.io](https://shiftr.io/try) as its MQTT broker, but it should work with any MQTT broker by changing the address and crednetials.
 
 ## What is MQTT? 
 
@@ -24,4 +26,10 @@ There are several MQTT microcontroller clients in this repository. Though they a
 * [DataLoggerMqttJSONRTC](https://github.com/tigoe/DataloggingExamples/tree/main/MQTTDatalogger/DataLoggerMqttJSONRTC) - similar to the first client, but uses the alarm function of the RTCZero library to control when messages are sent. 
 * [DataLoggerMqttJSONWithStatusCheck](https://github.com/tigoe/DataloggingExamples/tree/main/MQTTDatalogger/DataLoggerMqttJSONWithStatusCheck) - Based on the first client, and also listens on a UDP port for specific commands that let you check the status of the controller or restart it.
 * [DataLoggerMqttSubTopics](https://github.com/tigoe/DataloggingExamples/tree/main/MQTTDatalogger/DataLoggerMqttSubTopics) - sends the sensor properties as individual values that are subtopics of the `light-readings` topic rather than as a single JSON object. 
+
+## MQTT JavaScript Clients
+
+As mentioned in the system diagram description above, there are two JavaScript clients, one for the browser, and one for a server running node.js. The [browser client](https://github.com/tigoe/DataloggingExamples/tree/main/MQTTDatalogger/node-mqtt-client/public) can run in a browser with or without a server, as all the code runs in-browser only. It subscribes to the `light-readings` topic and reports any new messages in the HTML. It's included as the public HTML of the node client so that you can use them together if you want. They work well on [glitch.com](https://glitch.com).
+
+The [node.js server client](https://github.com/tigoe/DataloggingExamples/tree/main/MQTTDatalogger/node-mqtt-client/) subscribes to the `light-readings` topic and sends an HTTP POST request to a Google script to add the readings to a spreadsheet. The Google script/sheets part of this application is identical to the [Google Sheets Datalogger example](https://tigoe.github.io/DataloggingExamples/wifi-datalogger#google-sheets-datalogger) in this repository.
 

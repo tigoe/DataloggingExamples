@@ -1,6 +1,6 @@
 # Datalogging to a Server via MQTT and WiFi
 
-The datalogging application described here logs data to a server via WiFi using a network-enabled microcontroller as a datalogging client. It is based on the [WiFi datalogging application](wifi-datalogger), but instead of HTTP, the microcontroller clients use the [Message Queueing Telemetry Transfer (MQTT)](https://tigoe.github.io/mqtt-examples/) protocol.
+The datalogging application described here logs data to a server via WiFi using a network-enabled microcontroller as a datalogging client. It is based on the [WiFi datalogging application](wifi-datalogger), but instead of HTTP, the microcontroller clients use the Message Queueing Telemetry Transfer (MQTT) protocol. For more details on this, and other examples, see my [mqtt-examples](https://tigoe.github.io/mqtt-examples/) repository.
 
 These examples should all work on the network-enabled MKR boards, along with the Nano 33 IoT and other SAMD-based boards which have network capability. They can likely work on Espressif-based boards (ESP32, ESP8266) with some modification.
 
@@ -17,6 +17,8 @@ Figure 1 shows the system diagram for this datalogger. There are several microco
 The advantage of using MQTT for this datalogging application is that the microcontrollers don't have to wait for a reply from the server, and can therefore be inactive and using less energy more of the time. It's also simpler to program than an HTTP client.
 
 ![Figure 1. System diagram of the MQTT datalogger](images/mqtt-to-http-datalogger.png)
+
+_Figure 1. System diagram of the MQTT datalogger_
 
 ## MQTT Microcontroller Clients
 

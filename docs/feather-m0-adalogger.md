@@ -44,31 +44,31 @@ _(Potentiometer connected to a Feather. Potentiometer output pin is attached to 
 [![DHT11 Temp/Humidity sensor connected to a Feather" align="middle](images/DHT11_bb.png)](images/DHT11_bb.png)
 _(DHT11 Temp/Humidity sensor connected to a Feather. Sensor output pin is attached to digital pin 5 of the microcontroller.)_ 
 
-[Code example](https://github.com/tigoe/DataloggingExamples/blob/master/Columbia_Brown_Center_2016/DHT11/DHT11.ino)
+[Code example](https://github.com/tigoe/DataloggingExamples/blob/main/Columbia_Brown_Center_2016/DHT11/DHT11.ino)
 
-[Code example - Temp/Humidity Datalogger](https://github.com/tigoe/DataloggingExamples/blob/master/Columbia_Brown_Center_2016/TempHumidityLogger/TempHumidityLogger.ino)
+[Code example - Temp/Humidity Datalogger](https://github.com/tigoe/DataloggingExamples/blob/main/Columbia_Brown_Center_2016/TempHumidityLogger/TempHumidityLogger.ino)
 
 ###  Microphone
 [![MAX4466 microphone connected to a Feather" align="middle](images/MAX4466_bb.png)](images/MAX4466_bb.png)
 _(Max4466 Microphone connected to a Feather. Microphone output pin is attached to analog pin 0 of the microcontroller.)_ 
 
-[Code example - Loudness](https://github.com/tigoe/DataloggingExamples/blob/master/Columbia_Brown_Center_2016/Loudness/Loudness.ino)
+[Code example - Loudness](https://github.com/tigoe/DataloggingExamples/blob/main/Columbia_Brown_Center_2016/Loudness/Loudness.ino)
 
-[Code example - Frequency Meter](https://github.com/tigoe/DataloggingExamples/blob/master/Columbia_Brown_Center_2016/FrequencyMeter/FrequencyMeter.ino)
+[Code example - Frequency Meter](https://github.com/tigoe/DataloggingExamples/blob/main/Columbia_Brown_Center_2016/FrequencyMeter/FrequencyMeter.ino)
 
 
 ###  Light Sensor
 [![GA1A12S202 Log-scale light sensor connected to a Feather" align="middle](images/GA1A12S202_bb.png)](images/GA1A12S202_bb.png)
 _(GA1A12S202 Log-scale light sensor connected to a Feather. Sensor output pin is attached to analog pin 0 of the microcontroller.)_ 
 
-[Code example - Read Lux](https://github.com/tigoe/DataloggingExamples/blob/master/Columbia_Brown_Center_2016/GA1AS202LightSensor/GA1AS202LightSensor.ino)
+[Code example - Read Lux](https://github.com/tigoe/DataloggingExamples/blob/main/Columbia_Brown_Center_2016/GA1AS202LightSensor/GA1AS202LightSensor.ino)
 
 
 ### Accelerometer
 [![LIS3DH accelerometer connected to a Feather" align="middle](images/LIS3DH_bb.png)](images/LIS3DH_bb.png)
 _(LIS3DH accelerometer connected to a Feather. Sensor SDA and SCL pins are attached to SDA and SCL pins of the microcontroller.)_ 
 
-[Code example - Read g's](https://github.com/tigoe/DataloggingExamples/blob/master/Columbia_Brown_Center_2016/LIS3DHAccelerometer/LIS3DHAccelerometer.ino)
+[Code example - Read g's](https://github.com/tigoe/DataloggingExamples/blob/main/Columbia_Brown_Center_2016/LIS3DHAccelerometer/LIS3DHAccelerometer.ino)
 
 ### Ultrasonic Distance Ranger
 [![Maxbotix LV-EZ0 Ultrasonic Distance Ranger connected to a Feather" align="middle](images/Maxbotix_bb.png)](images/Maxbotix_bb.png)
@@ -78,7 +78,7 @@ _(Maxbotix LV-EZ0 Ultrasonic Distance Ranger connected to a Feather. Sensor outp
 [![PIR motiomn sensor connected to a Feather" align="middle](images/PIR_sensor_bb.png)](images/PIR_sensor_bb.png)
 _(PIR motion sensor connected to a Feather. Sensor output pin is attached to digital pin 5 of the microcontroller.)_ 
 
-[Code example](https://github.com/tigoe/DataloggingExamples/blob/master/Columbia_Brown_Center_2016/PIR_sensor/PIR_sensor.ino)
+[Code example](https://github.com/tigoe/DataloggingExamples/blob/main/Columbia_Brown_Center_2016/PIR_sensor/PIR_sensor.ino)
 
 ## All Code Examples
-There are additional code examples for the se sensors, and for the SD card and real-time clock at [this link](https://github.com/tigoe/DataloggingExamples/tree/master/Columbia_Brown_Center_2016).
+There are additional code examples for the se sensors, and for the SD card and real-time clock at [this link](https://github.com/tigoe/DataloggingExamples/tree/main/Columbia_Brown_Center_2016).

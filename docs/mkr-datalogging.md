@@ -5,10 +5,10 @@ The MKR series boards offer a number of ways to build networked dataloggers that
 If you're interested in using the network-enabled versions of these boards (MKR1010, MKR1000, MKR1400, MKR1500) to connect to a web app that logs the data, see the [WiFi Datalogger tutorial](wifi-datalogger.md). 
 
 ## Examples
-* [MKR_Interrupt_RTC_logger](https://github.com/tigoe/DataloggingExamples/tree/master/MKR_examples/MKR_Interrupt_RTC_logger)   
-* [MKR_battery_SD_logger](https://github.com/tigoe/DataloggingExamples/tree/master/MKR_examples/MKR_battery_SD_logger)
-* [MKR_battery_LowPower_TimedWakeTest](https://github.com/tigoe/DataloggingExamples/tree/master/MKR_examples/MKR_battery_LowPower_TimedWakeTest)
-* [MKR_Datestamped_Files](https://github.com/tigoe/DataloggingExamples/tree/master/MKR_examples/MKR_Datestamped_Files)
+* [MKR_Interrupt_RTC_logger](https://github.com/tigoe/DataloggingExamples/tree/main/MKR_examples/MKR_Interrupt_RTC_logger)   
+* [MKR_battery_SD_logger](https://github.com/tigoe/DataloggingExamples/tree/main/MKR_examples/MKR_battery_SD_logger)
+* [MKR_battery_LowPower_TimedWakeTest](https://github.com/tigoe/DataloggingExamples/tree/main/MKR_examples/MKR_battery_LowPower_TimedWakeTest)
+* [MKR_Datestamped_Files](https://github.com/tigoe/DataloggingExamples/tree/main/MKR_examples/MKR_Datestamped_Files)
 
 ## Board Layout
 

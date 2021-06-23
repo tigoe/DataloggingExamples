@@ -31,7 +31,6 @@
 #include <RTCZero.h>
 #include <ArduinoMqttClient.h>
 // I2C and light sensor libraries:
-#include <Wire.h>
 #include <Adafruit_TCS34725.h>
 #include <WiFiUdp.h>
 // network names and passwords:
@@ -41,7 +40,6 @@
 // (use WIFiClient and port number 1883 for unencrypted connections):
 WiFiSSLClient wifi;
 MqttClient mqttClient(wifi);
-String addressString = "";
 
 WiFiUDP Udp;                    // UDP instance
 unsigned int udpPort = 43770;   // local port to listen on
@@ -53,7 +51,7 @@ int port = 8883;
 char topic[] = "light-readings";
 const char willTopic[] = "light-readings/will";
 String clientID = "light-client-";
-const char location[] = "home";
+const char location[] = "NW _corner";
 
 // initialize RTC:
 RTCZero rtc;

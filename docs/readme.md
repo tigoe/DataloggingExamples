@@ -16,7 +16,7 @@ I presented [a workshop](brown-workshop.md)
  at Columbia University. [These examples](brown-workshop.md) are from that workshop. In this workshop, you'll find examples of how to use a Feather M0 Adalogger from Adafruit.com to read data from sensors and save to an SD card.
 
 ## 2012: Citizen Science Cybersummit Workshop
-I presented [an introductory workshop](http://www.tigoe.net/pcomp/code/?p=1043) at the [Citizen Science Cybersummit](http://cybersciencesummit.org/2012/02/summit-coverage-on-gridcast/) in London in 2012. [These examples](https://github.com/tigoe/DataloggingExamples/tree/master/Citizen_Cyberscience_summit_2012) are from that workshop.  In the examples from that workshop, you'll find examples on how to read a DHT11 temperature and humidity sensor and log data in three ways:
+I presented [an introductory workshop](http://www.tigoe.net/pcomp/code/?p=1043) at the [Citizen Science Cybersummit](http://cybersciencesummit.org/2012/02/summit-coverage-on-gridcast/) in London in 2012. [These examples](https://github.com/tigoe/DataloggingExamples/tree/main/Citizen_Cyberscience_summit_2012) are from that workshop.  In the examples from that workshop, you'll find examples on how to read a DHT11 temperature and humidity sensor and log data in three ways:
 
 * Serial transmission to a personal computer, and serial capture to a file.
 * Saving data to an SD card mounted on the Arduino

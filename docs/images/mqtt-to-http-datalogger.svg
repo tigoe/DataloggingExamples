@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xl="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="148 140 657 409" width="657" height="409">
+  <defs>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.18.5\n2021-06-23 10:45:13 +0000</metadata>
+  <g id="Canvas_1" stroke="none" stroke-dasharray="none" fill-opacity="1" stroke-opacity="1" fill="none">
+    <title>Canvas 1</title>
+    <rect fill="white" x="148" y="140" width="657" height="409"/>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_2">
+        <rect x="434" y="338.75" width="128.5" height="71" fill="white"/>
+        <rect x="434" y="338.75" width="128.5" height="71" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(439 365.026)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="11.09" y="15">MQTT Broker</tspan>
+        </text>
+      </g>
+      <g id="Graphic_3">
+        <rect x="192.5" y="140.5" width="103.5" height="56.5" fill="white"/>
+        <rect x="192.5" y="140.5" width="103.5" height="56.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(197.5 150.302)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="24.518" y="15">MQTT </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="1.414" y="33.448">sensor client</tspan>
+        </text>
+      </g>
+      <g id="Graphic_4">
+        <rect x="362" y="140.5" width="103.5" height="56.5" fill="white"/>
+        <rect x="362" y="140.5" width="103.5" height="56.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(367 150.302)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="24.518" y="15">MQTT </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="1.414" y="33.448">sensor client</tspan>
+        </text>
+      </g>
+      <g id="Graphic_5">
+        <rect x="531.5" y="140.5" width="103.5" height="56.5" fill="white"/>
+        <rect x="531.5" y="140.5" width="103.5" height="56.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(536.5 150.302)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="24.518" y="15">MQTT </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="1.414" y="33.448">sensor client</tspan>
+        </text>
+      </g>
+      <g id="Graphic_6">
+        <rect x="701" y="140.5" width="103.5" height="56.5" fill="white"/>
+        <rect x="701" y="140.5" width="103.5" height="56.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(706 150.302)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="24.518" y="15">MQTT </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="1.414" y="33.448">sensor client</tspan>
+        </text>
+      </g>
+      <g id="Graphic_7">
+        <rect x="148.5" y="346" width="103.5" height="56.5" fill="white"/>
+        <rect x="148.5" y="346" width="103.5" height="56.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(153.5 346.578)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="12.966" y="15">HTML/JS </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="24.518" y="33.448">MQTT</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="27.638" y="51.895996">client</tspan>
+        </text>
+      </g>
+      <g id="Graphic_9">
+        <rect x="701" y="346" width="103.5" height="56.5" fill="white"/>
+        <rect x="701" y="346" width="103.5" height="56.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(706 346.578)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="19.342" y="15">Node.js </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="12.214" y="33.448">MQTT-to-</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="5.27" y="51.895996">HTTP client</tspan>
+        </text>
+      </g>
+      <g id="Graphic_10">
+        <rect x="583.97416" y="491.4004" width="103.5" height="56.5" fill="white"/>
+        <rect x="583.97416" y="491.4004" width="103.5" height="56.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(588.97416 501.2024)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="20.83" y="15">Google </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="1.422" y="33.448">Script server</tspan>
+        </text>
+      </g>
+      <g id="Graphic_11">
+        <rect x="317" y="490.646" width="103.5" height="56.5" fill="white"/>
+        <rect x="317" y="490.646" width="103.5" height="56.5" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(322 500.448)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="20.83" y="15">Google </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="5.262" y="33.448">Sheets Doc</tspan>
+        </text>
+      </g>
+      <g id="Line_13">
+        <line x1="279.16727" y1="197" x2="446.67517" y2="332.5231" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_14">
+        <line x1="425.3662" y1="197" x2="479.88774" y2="329.59384" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_15">
+        <line x1="571.5651" y1="197" x2="516.7177" y2="329.6017" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_16">
+        <line x1="717.764" y1="197" x2="549.9172" y2="332.5305" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_17">
+        <rect x="268.83346" y="210.958" width="113.136" height="46.895996" fill="white"/>
+        <text transform="translate(273.83346 215.958)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="22.968" y="15">Publish:</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">Light-readings</tspan>
+        </text>
+      </g>
+      <g id="Graphic_18">
+        <rect x="383.60254" y="209.5555" width="113.136" height="46.895996" fill="white"/>
+        <text transform="translate(388.60254 214.5555)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="22.968" y="15">Publish:</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">Light-readings</tspan>
+        </text>
+      </g>
+      <g id="Graphic_19">
+        <rect x="499.7295" y="210.46364" width="113.136" height="46.895996" fill="white"/>
+        <text transform="translate(504.7295 215.46364)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="22.968" y="15">Publish:</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">Light-readings</tspan>
+        </text>
+      </g>
+      <g id="Graphic_21">
+        <rect x="615.80504" y="210.20363" width="113.136" height="46.895996" fill="white"/>
+        <text transform="translate(620.80504 215.20363)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="22.968" y="15">Publish:</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">Light-readings</tspan>
+        </text>
+      </g>
+      <g id="Line_26">
+        <line x1="434" y1="374.25" x2="261.9" y2="374.25" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_27">
+        <rect x="288.3341" y="350.802" width="113.136" height="46.895996" fill="white"/>
+        <text transform="translate(293.3341 355.802)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="13.192" y="15">Subscribe:</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">Light-readings</tspan>
+        </text>
+      </g>
+      <g id="Line_29">
+        <line x1="562.5" y1="374.25" x2="691.1" y2="374.25" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_30">
+        <rect x="574.33816" y="350.802" width="113.136" height="46.895996" fill="white"/>
+        <text transform="translate(579.33816 355.802)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="13.192" y="15">Subscribe:</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">Light-readings</tspan>
+        </text>
+      </g>
+      <g id="Line_31">
+        <line x1="730.0129" y1="402.5" x2="664.6685" y2="483.68806" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_32">
+        <rect x="647.7193" y="421.1537" width="96.816" height="46.895996" fill="white"/>
+        <text transform="translate(652.7193 426.1537)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="15">HTTP POST</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="9.776" y="33.448">Readings</tspan>
+        </text>
+      </g>
+      <g id="Line_33">
+        <line x1="583.97416" y1="519.50415" x2="430.39996" y2="519.0702" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_34">
+        <rect x="453.14603" y="495.8254" width="98.32" height="46.895996" fill="white"/>
+        <text transform="translate(456.96203 500.8254)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="9.784" y="15">Insert into</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="0" y="33.448">Spreadsheet</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

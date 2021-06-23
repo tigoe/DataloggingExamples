@@ -59,7 +59,7 @@ long lastSendTime = 0;
 // interval between requests, in minutes:
 int sendInterval = 1;
 // time before broker should release the will, in ms:
-long int keepAliveInterval =  sendInterval * 2 * 60 * 1000;
+long int keepAliveInterval =  sendInterval * 10 * 60 * 1000;
 // initialize the light sensor:
 Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_700MS, TCS34725_GAIN_1X);
 // number of successful readings that have been sent:

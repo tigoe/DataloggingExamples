@@ -20,7 +20,7 @@
 // include required libraries and config files
 #include <SPI.h>
 //#include <WiFi101.h>        // for MKR1000 modules
-#include <WiFiNINA.h>         // for MKR1010 modules and Nano 33 IoT modules
+#include <WiFiNINA.h>  // for MKR1010 modules and Nano 33 IoT modules
 // for simplifying JSON formatting:
 #include <Arduino_JSON.h>
 // realtime clock module on the SAMD21 processor:
@@ -59,7 +59,7 @@ volatile bool timeToUpdate = true;
 // interval between requests, in minutes:
 int sendInterval = 1;
 // time before broker should release the will, in ms:
-long int keepAliveInterval =  sendInterval * 2 * 60 * 1000;
+long int keepAliveInterval = sendInterval * 2 * 60 * 1000;
 // initialize the light sensor:
 
 AS7265X sensor;
@@ -67,12 +67,13 @@ AS7265X sensor;
 unsigned long readingCount = 0;
 
 void setup() {
-  Serial.begin(9600);              // initialize serial communication
+  Serial.begin(9600);  // initialize serial communication
   // if serial monitor is not open, wait 3 seconds:
   if (!Serial) delay(3000);
   if (!sensor.begin()) {
     Serial.println("Sensor is not responding. Please check wiring.");
-    while (true);
+    while (true)
+      ;
   }
   // start the realtime clock:
   rtc.begin();
@@ -157,9 +158,9 @@ void updateBroker() {
   you put the results into the body JSON object
 */
 void readSensor() {
-    // Read all 18 channels. This takes several seconds:
-  sensor.takeMeasurements();  
-  
+  // Read all 18 channels. This takes several seconds:
+  sensor.takeMeasurements();
+
   // update elements of request body JSON object:
   body["A"] = sensor.getCalibratedA();
   body["B"] = sensor.getCalibratedB();
@@ -179,7 +180,7 @@ void readSensor() {
   body["U"] = sensor.getCalibratedU();
   body["V"] = sensor.getCalibratedV();
   body["W"] = sensor.getCalibratedW();
-   
+
   // update elements of request body JSON object:
   body["timeStamp"] = rtc.getEpoch();
   body["uptime"] = rtc.getEpoch() - startTime;
@@ -188,7 +189,7 @@ void readSensor() {
 
 void connectToNetwork() {
   // try to connect to the network:
-  while ( WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED) {
     Serial.println("Attempting to connect to: " + String(SECRET_SSID));
     //Connect to WPA / WPA2 network:
     WiFi.begin(SECRET_SSID, SECRET_PASS);

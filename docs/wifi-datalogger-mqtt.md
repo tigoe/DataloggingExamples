@@ -16,11 +16,12 @@ The advantage of using MQTT for this datalogging application is that the microco
 
 ![Figure 1. System diagram of the MQTT datalogger](images/mqtt-to-http-datalogger.png)
 
-## MQTT Clients
+## MQTT Microcontroller Clients
 
-There are several MQTT microcontroller clients in this repository:
-* DataLoggerMqttJSON - the simplest of the clients. Reads a sensor and sends an MQTT message as a JSON object. 
-* DataLoggerMqttJSONRTC - similar to the first client, but uses the alarm function of the RTCZero library to control when messages are sent. 
-* DataLoggerMqttJSONWithStatusCheck - Based on the first client, and also listens on a UDP port for specific commands that let you check the status of the controller or restart it.
-* DataLoggerMqttSubTopics - sends the sensor properties as individual values that are subtopics of the `light-readings` topic rather than as a single JSON object. 
+There are several MQTT microcontroller clients in this repository. Though they are all written with a specific sensor in mind, you could change the sensor out for any sensor, and modify the code accordingly. The MQTT part of the code would remain the same.
+
+* [DataLoggerMqttJSON](https://github.com/tigoe/DataloggingExamples/tree/main/MQTTDatalogger/DataLoggerMqttJSON) - the simplest of the clients. Reads a sensor and sends an MQTT message as a JSON object. 
+* [DataLoggerMqttJSONRTC](https://github.com/tigoe/DataloggingExamples/tree/main/MQTTDatalogger/DataLoggerMqttJSONRTC) - similar to the first client, but uses the alarm function of the RTCZero library to control when messages are sent. 
+* [DataLoggerMqttJSONWithStatusCheck](https://github.com/tigoe/DataloggingExamples/tree/main/MQTTDatalogger/DataLoggerMqttJSONWithStatusCheck) - Based on the first client, and also listens on a UDP port for specific commands that let you check the status of the controller or restart it.
+* [DataLoggerMqttSubTopics](https://github.com/tigoe/DataloggingExamples/tree/main/MQTTDatalogger/DataLoggerMqttSubTopics) - sends the sensor properties as individual values that are subtopics of the `light-readings` topic rather than as a single JSON object. 
 

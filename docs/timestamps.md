@@ -62,14 +62,18 @@ var yearsDiff = secondsDiff / 31556926;
 
 To round these to the nearest whole number, you can use `Math.floor()`. For example `Math.floor(secondsDiff)` gives you the seconds difference with no fraction. 
 
-And to calculate the years and days:
+And to calculate the years:
 
 ````js
 var years = Math.floor(diff / 31556926);
-var days = Math.floor((diff % 31556926) / 86400);
 ````
 
-Results in 3 years and 356 days.
+To calculate the remaining days, use modulo arithmetic. Take the remainder of the years difference (diff % 31556926) and divide by the length of a day (86400): 
+
+````js
+var days = Math.floor((diff % 31556926) / 86400);
+````
+This results in 3 years and 356 days.
 
 [Here is a node server](https://github.com/tigoe/NodeExamples/tree/main/TimeServer) that gets the time from its host computer using the JavaScript Date commands.
 

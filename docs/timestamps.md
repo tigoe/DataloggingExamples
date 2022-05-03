@@ -43,37 +43,62 @@ The JS Date API uses milliseconds as its basis, not seconds, so to convert to ep
 If you have two dates and you want to know the difference between them, apply the calculations above. For example:
 
 ````js
-var now = new Date('3/12/97');
-var then = new Date('3/31/93');
+var now = new Date('3/12/97 1:23:45');
+var then = new Date('3/31/93 13:23:00');
 ````
-These dates are 3 years and 356 days apart exactly. Since you didn't enter a time, both default to midnight. So:
+How far apart are these two date-times? It depends on your time scale. Start with the number of seconds in each time unit:
 
+````js
+const secondsInAnHour = 3600;
+const secondsInADay = 86400;
+const secondsInAWeek = 604800;
+const secondsInAMonth = 2629743;
+const secondsInAYear = 31556926;
 ````
+Then calculate the difference using those:
+````js
 // JS gives you the values in milliseconds, so:
 var difference = now - then;
+// the total difference between now and then, in seconds (124545645):
 var secondsDiff = (now - then) / 1000;
+// in minutes (2075760.75):
 var minutesDiff = secondsDiff / 60; 
-var hoursDiff = secondsDiff / 3600; 
-var daysDiff = secondsDiff / 86400; 
-var weeksDiff = secondsDiff / 604800; 
-var monthsDiff = secondsDiff / 2629743; 
-var yearsDiff = secondsDiff / 31556926; 
+// in hours (34596.0125):
+var hoursDiff = secondsDiff / secondsInAnHour; 
+// in days (1441.5005208333334):
+var daysDiff = secondsDiff / secondsInADay; 
+// in weeks (205.92864583333332):
+var weeksDiff = secondsDiff / secondsInAWeek; 
+// in months (47.36038654727857):
+var monthsDiff = secondsDiff / secondsInAMonth; 
+// in years (3.9466976282797632):
+var yearsDiff = secondsDiff / secondsInAYear; 
 ````
 
-To round these to the nearest whole number, you can use `Math.floor()`. For example `Math.floor(secondsDiff)` gives you the seconds difference with no fraction. 
+What if you want to know the number of years, months, days, hours, minutes, and seconds between the two?  (It's  3 years, 11 months, 10 days, 12 hours, 0 minutes, and 45 seconds). For that, you need to break the difference down into parts. To do that for any given time unit, take the remainder (the modulo value) of the value in seconds divided by the number of seconds in that unit.  Then divide by the length in seconds of a unit you want. Finally, round it to get rid of the fraction, using `Math.floor()`.
 
-And to calculate the years:
+Here it is, one unit at a time:
 
 ````js
-var years = Math.floor(diff / 31556926);
+var years = Math.floor(secondsDiff / secondsInAYear);
+var months = Math.floor((secondsDiff % secondsInAYear) / secondsInAMonth);
+var weeks = Math.floor((secondsDiff % secondsInAYear) / secondsInAWeek);
+var days = Math.floor((secondsDiff % secondsInAMonth) / secondsInADay);
+var hours = Math.floor((secondsDiff % secondsInADay) / secondsInAnHour);
+var minutes = Math.floor((secondsDiff % secondsInAnHour) / 60);
+var seconds = Math.floor((secondsDiff % 60));
 ````
 
-To calculate the remaining days, use modulo arithmetic. Take the remainder of the years difference (diff % 31556926) and divide by the length of a day (86400): 
-
+When you've got all of that, print it out:
 ````js
-var days = Math.floor((diff % 31556926) / 86400);
+console.log(years + ' years '
++ months + ' months '
++ days + ' days '
++ hours + ' hours ' 
++ minutes + ' minutes '
++ seconds + ' seconds');
 ````
-This results in 3 years and 356 days.
+ You should get `3 years 11 months 10 days 12 hours 0 minutes 45 seconds`.
 
 [Here is a node server](https://github.com/tigoe/NodeExamples/tree/main/TimeServer) that gets the time from its host computer using the JavaScript Date commands.
 
@@ -81,6 +106,16 @@ This results in 3 years and 356 days.
 
 When you're datalogging, it's often necessary to attach a time stamp to each set of sensor readings, and you need coordinated time for that. The simplest solution if you're logging sensor data to a web server via WiFi is to let the server timestamp each reading. However, there may be reasons to time stamp locally by the microcontroller as well. If that is the case, then you want to attach a real-time clock to the microcontroller, or use a controller with one built-in, like the Nano 33 IoT or the MKR boards. The [RTCZero]((https://www.arduino.cc/reference/en/libraries/rtczero/)) library lets you access that realtime clock, and the WiFi libraries let you set the clock by making a network time server request, using the command `WiFi.getTime()`. 
 
-On the Arduino SAMD boards (Nano 33 IoT, BLE, MKR boards), there is a Real-time Clock that allows you to keep time in hours, minutes and seconds. the RTCZero library allows you to access this feature of the microcontroller. There several examples for setting the time using this library in [this repository](https://github.com/ITPNYU/clock-club/tree/main/Microcontroller_Time_Setting_Methods). There is example which uses WiFi to connect to the network and get the time, then sets the RTC using the epoch at [this link](https://github.com/ITPNYU/clock-club/blob/main/Microcontroller_Time_Setting_Methods/WiFiTimeSet/WiFiTimeSet.ino). In this example, you can see some similar time difference calculations as those above in the [`getUptime` function (line 122)](https://github.com/ITPNYU/clock-club/blob/2e73d280f02625948d21c1e7ae69216f9e46cecc/Microcontroller_Time_Setting_Methods/WiFiTimeSet/WiFiTimeSet.ino#L122).
+On the Arduino SAMD boards (Nano 33 IoT, BLE, MKR boards), there is a Real-time Clock that allows you to keep time in hours, minutes and seconds. the RTCZero library allows you to access this feature of the microcontroller. There several examples for setting the time using this library in [this repository](https://github.com/ITPNYU/clock-club/tree/main/Microcontroller_Time_Setting_Methods). There is example which uses WiFi to connect to the network and get the time, then sets the RTC using the epoch at [this link](https://github.com/ITPNYU/clock-club/blob/main/Microcontroller_Time_Setting_Methods/WiFiTimeSet/WiFiTimeSet.ino). In this example, you can see some similar time difference calculations as those above in the [`getUptime` function (line 122)](https://github.com/ITPNYU/clock-club/blob/2e73d280f02625948d21c1e7ae69216f9e46cecc/Microcontroller_Time_Setting_Methods/WiFiTimeSet/WiFiTimeSet.ino#L122).  Because you're working in integers, the math can be simpler:
+
+````arduino
+unsigned long upTime = rtc.getEpoch() - startTime;
+int upSecs = upTime % 60;
+int upMins = (upTime % 3600L) / 60;
+int upHours = (upTime % 86400L) / 3600;
+int upDays = (upTime % 31556926L) / 86400L;
+````
+
+The `L` on the end of the constants indicated that they should be stored as long integers. 
 
 In a connected system, it's better to let the server keep track of timestamps, since it's the one running all the time. But when you need to keep a client device up and running, the RTC library is very useful. Without it, you're constantly checking with the server or with a time server for the correct time. 

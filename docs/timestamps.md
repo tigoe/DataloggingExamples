@@ -115,7 +115,6 @@ int upMins = (upTime % 3600L) / 60;
 int upHours = (upTime % 86400L) / 3600;
 int upDays = (upTime % 31556926L) / 86400L;
 ````
-
-The `L` on the end of the constants indicated that they should be stored as long integers. 
+The `L` on the end of the constants is a C language formatting element indicating that they should be stored as long integers. 
 
 In a connected system, it's better to let the server keep track of timestamps, since it's the one running all the time. But when you need to keep a client device up and running, the RTC library is very useful. Without it, you're constantly checking with the server or with a time server for the correct time. 

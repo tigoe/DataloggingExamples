@@ -46,7 +46,7 @@ If you have two dates and you want to know the difference between them, apply th
 var now = new Date('3/12/97');
 var then = new Date('3/31/93');
 ````
-These dates are 3 years and 356 days apart. So:
+These dates are 3 years and 356 days apart exactly. Since you didn't enter a time, both default to midnight. So:
 
 ````
 // JS gives you the values in milliseconds, so:

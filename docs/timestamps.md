@@ -43,8 +43,12 @@ The JS Date API uses milliseconds as its basis, not seconds, so to convert to ep
 If you have two dates and you want to know the difference between them, apply the calculations above. For example:
 
 ````js
-var now = new Date();
-var then = new Date('');
+var now = new Date('3/12/97');
+var then = new Date('3/31/93');
+````
+These dates are 3 years and 356 days apart. So:
+
+````
 // JS gives you the values in milliseconds, so:
 var difference = now - then;
 var secondsDiff = (now - then) / 1000;
@@ -55,7 +59,17 @@ var weeksDiff = secondsDiff / 604800;
 var monthsDiff = secondsDiff / 2629743; 
 var yearsDiff = secondsDiff / 31556926; 
 ````
+
 To round these to the nearest whole number, you can use `Math.floor()`. For example `Math.floor(secondsDiff)` gives you the seconds difference with no fraction. 
+
+And to calculate the years and days:
+
+````js
+var years = Math.floor(diff / 31556926);
+var days = Math.floor((diff % 31556926) / 86400);
+````
+
+Results in 3 years and 356 days.
 
 [Here is a node server](https://github.com/tigoe/NodeExamples/tree/main/TimeServer) that gets the time from its host computer using the JavaScript Date commands.
 
@@ -63,7 +77,6 @@ To round these to the nearest whole number, you can use `Math.floor()`. For exam
 
 When you're datalogging, it's often necessary to attach a time stamp to each set of sensor readings, and you need coordinated time for that. The simplest solution if you're logging sensor data to a web server via WiFi is to let the server timestamp each reading. However, there may be reasons to time stamp locally by the microcontroller as well. If that is the case, then you want to attach a real-time clock to the microcontroller, or use a controller with one built-in, like the Nano 33 IoT or the MKR boards. The [RTCZero]((https://www.arduino.cc/reference/en/libraries/rtczero/)) library lets you access that realtime clock, and the WiFi libraries let you set the clock by making a network time server request, using the command `WiFi.getTime()`. 
 
-
-On the Arduino SAMD boards (Nano 33 IoT, BLE, MKR boards), there is a Real-time Clock that allows you to keep time in hours, minutes and seconds. the RTCZero library allows you to access this feature of the microcontroller. There several examples for setting the time using this library in [this repository](https://github.com/ITPNYU/clock-club/tree/main/Microcontroller_Time_Setting_Methods). There is example which uses WiFi to connect to the network and get the time, then sets the RTC using the epoch at [this link](https://github.com/ITPNYU/clock-club/blob/main/Microcontroller_Time_Setting_Methods/WiFiTimeSet/WiFiTimeSet.ino).
+On the Arduino SAMD boards (Nano 33 IoT, BLE, MKR boards), there is a Real-time Clock that allows you to keep time in hours, minutes and seconds. the RTCZero library allows you to access this feature of the microcontroller. There several examples for setting the time using this library in [this repository](https://github.com/ITPNYU/clock-club/tree/main/Microcontroller_Time_Setting_Methods). There is example which uses WiFi to connect to the network and get the time, then sets the RTC using the epoch at [this link](https://github.com/ITPNYU/clock-club/blob/main/Microcontroller_Time_Setting_Methods/WiFiTimeSet/WiFiTimeSet.ino). In this example, you can see some similar time difference calculations as those above in the [`getUptime` function (line 122)](https://github.com/ITPNYU/clock-club/blob/2e73d280f02625948d21c1e7ae69216f9e46cecc/Microcontroller_Time_Setting_Methods/WiFiTimeSet/WiFiTimeSet.ino#L122).
 
 In a connected system, it's better to let the server keep track of timestamps, since it's the one running all the time. But when you need to keep a client device up and running, the RTC library is very useful. Without it, you're constantly checking with the server or with a time server for the correct time. 

@@ -10,6 +10,8 @@ To keep track of time in a connected system, you need coordinated time.  Network
 * 1 month (30.44 days) = 2629743 seconds
 * 1 year (365.24 days)  = 31556926 seconds
 
+These numbers are key to calculating any time difference, as you'll see below. 
+
 ## Time and Date in JavaScript
 
 In JavaScript, the [Date API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date), which is based on UTC, lets you get time, calculate differences between time, convert a time to your local timezone, etc. It can be used on the client side or the server side.
@@ -37,6 +39,23 @@ let myDate = Date.now();
 ````
 
 The JS Date API uses milliseconds as its basis, not seconds, so to convert to epoch time, you need to divide by 1000. 
+
+If you have two dates and you want to know the difference between them, apply the calculations above. For example:
+
+````js
+var now = new Date();
+var then = new Date('');
+// JS gives you the values in milliseconds, so:
+var difference = now - then;
+var secondsDiff = (now - then) / 1000;
+var minutesDiff = secondsDiff / 60; 
+var hoursDiff = secondsDiff / 3600; 
+var daysDiff = secondsDiff / 86400; 
+var weeksDiff = secondsDiff / 604800; 
+var monthsDiff = secondsDiff / 2629743; 
+var yearsDiff = secondsDiff / 31556926; 
+````
+To round these to the nearest whole number, you can use `Math.floor()`. For example `Math.floor(secondsDiff)` gives you the seconds difference with no fraction. 
 
 [Here is a node server](https://github.com/tigoe/NodeExamples/tree/main/TimeServer) that gets the time from its host computer using the JavaScript Date commands.
 

@@ -1,13 +1,13 @@
 
 # Google Sheets Datalogger
 
-![system diagram of a datalogger connected to a Google spreadsheet, as described below.](images/wifi-datalogger-google-sheets.png)
+![system diagram of a datalogger connected to a Google spreadsheet, as described below.](../../images/wifi-datalogger-google-sheets.png)
 
 _Figure 2. System diagram of the Google apps script datalogger_
 
 The [Google Apps script](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app) in this repository allows you to save data to a Google Sheets spreadsheet via HTTP. Arnab Chakravarty has a [tutorial on how it works](https://github.com/AbolTaabol/Arduino-GoogleSheet_Logger). For more background on Google Apps scripts, see the link above, or [this link](https://developers.google.com/apps-script/guides/web) which explains the web functions `doGet()` and `doPost()`, which are the main functions of this example. 
 
-The structure of the system is similar to the node server, and is diagrammed in Figure 2. The microcontroller only has to change the URL and API route that it's sending data to, in order to send data to the Google apps script. The script takes the place of the node.js server, and writes to a Google Sheets spreadsheet instead of a text file.
+The structure of the system is similar to the node server, and is diagrammed in Figure 2. The microcontroller only has to change the URL and route that it's sending data to in order to send data to the Google apps script. The script writes to a Google Sheets spreadsheet that you need to create.
 
 What's great about the Google Apps scripting API is that it's just JavaScript, it lets you give your spreadsheet into a web service quickly,   and it gives you everything you might need to know about a given HTTP request in JSON, so it's easy to parse it out and put it into the cells of a spreadsheet. This lets you take advantage of all the things you can do with the data in a spreadsheet: sorting, graphing, filtering, and so forth.
 

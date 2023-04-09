@@ -8,7 +8,7 @@ This site contains a number of data logging examples I've written for different 
 Notes on [real-time clocks in Arduino and the JavaScript Date API](timestamps.md). These are useful in tracking time on a client or server. 
 
 ## 2021: WiFi HTTP and MQTT Dataloggers
-This [WiFi datalogging tutorial](DataloggingExamples/), written for a personal project using Arduino Nano 33 IoT boards, shows you how to connect to a server to log data. It includes a node.js-based server script example, and a Google Sheets script that can take HTTP requests, along with two Arduino examples using the WiFi libraries and the ArduinoHttpClient library. There's also an example of how to do this with [MQTT](https://tigoe.github.io/DataloggingExamples/wifi-datalogger-mqtt.html).
+This [WiFi datalogging tutorial](WiFiDatalogger/), written for a personal project using Arduino Nano 33 IoT boards, shows you how to connect to a server to log data. It includes a node.js-based server script example, and a Google Sheets script that can take HTTP requests, along with two Arduino examples using the WiFi libraries and the ArduinoHttpClient library. There's also an example of how to do this with [MQTT](https://tigoe.github.io/DataloggingExamples/wifi-datalogger-mqtt.html).
 
 ## 2019: MKR Series Examples
 In 2019 I started writing examples for the MKR series of Arduinos, which are based on the SAMD21 ARM M0+ processor. The built-in realtime clock on the MKR boards, along with other features, make them my current favorite for datalogging. [This overview](mkr-datalogging.md) provides an introduction and some links to examples. 

@@ -1,7 +1,7 @@
 let luxInput, ctInput, loadTime;
 let now;
 // unique ID, a 9-byte number in hexadecimal format:
-let myUid = "AA00BB11CC22DD33EE";
+let myUid = "AABBCCDDEEFF";
 function setup(event) {
 // make variables of the lux and ct inputs:
   luxInput = document.getElementById("lux");

@@ -18,7 +18,7 @@ const server = express();
 // include body-parser:
 const bodyParser = require("body-parser");
 // set up an array of known users' unique IDs (uids):
-let knownClients = ["2462abb1e2ac"];
+let knownClients = ["AABBCCDDEEFF"];
 
 // include filesystem utilities:
 const fs = require("fs");

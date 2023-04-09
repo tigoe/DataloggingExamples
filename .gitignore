@@ -30,3 +30,5 @@ WiFiDatalogger/DataLoggerHttpClientJSON_MAC/arduino_secrets.h
 MQTTDatalogger/DataLoggerMqttJSON/arduino_secrets.h
 MQTTDatalogger/DataLoggerMqttJSONRTC/arduino_secrets.h
 */arduino_secrets.h
+node_modules
+WiFiDatalogger/node-datalogging-server/data.json

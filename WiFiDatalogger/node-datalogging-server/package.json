@@ -1,6 +1,6 @@
 {
   "name": "datalogger",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A server to receive and send JSON-based, timestamped data records",
   "main": "server.js",
   "scripts": {

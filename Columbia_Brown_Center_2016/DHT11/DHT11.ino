@@ -35,8 +35,8 @@ void loop() {
   long currentTime = millis();
 // if the read delay interval has passed, read the sensor:
   if (currentTime > lastReadTime + interval) {
-    float humidity = dht.readTemperature();
-    float temperature = dht.readHumidity();
+    float temperature = dht.readTemperature();
+    float humidity = dht.readHumidity();
     
      // print to the serial port:
     Serial.print(humidity);

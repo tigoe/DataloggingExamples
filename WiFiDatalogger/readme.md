@@ -5,9 +5,9 @@ The examples described here log data to a server via WiFi using a network-enable
 [This collection](WiFiDatalogger/) includes [ArduinoHttpClient](https://www.arduino.cc/reference/en/libraries/arduinohttpclient/) examples along with a [node.js](https://nodejs.org/) server script. There are also instructions for how to log data to a Google Sheets spreadsheet using [Google Apps script](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app), thanks to Arnab Chakravarty. 
 
 The scripts:
-* [ArduinoHttpClient logger]({{codeurl}}/DataLoggerHttpClientJSON/)
-* [node.js server]({{codeurl}}/node-datalogging-server/)
-* [Google Apps script]()
+* [ArduinoHttpClient logger]({{codeurl}}/WiFiDatalogger/DataLoggerHttpClientJSON/)
+* [node.js server]({{codeurl}}/WiFiDatalogger/node-datalogging-server/)
+* [Google Apps script]({{codeurl}}/WiFiDatalogger/google-sheets-datalogger/)
 
 To make this work, you'll need:
 

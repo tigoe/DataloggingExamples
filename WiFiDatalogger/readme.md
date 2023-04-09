@@ -6,8 +6,8 @@ This collection includes an [ArduinoHttpClient](https://www.arduino.cc/reference
 
 The scripts:
 * [ArduinoHttpClient logger](https://github.com/tigoe/DataloggingExamples/tree/main/WiFiDatalogger/DataLoggerHttpClientJSON/)
-* [node.js server](https://github.com/tigoe/DataloggingExamples/tree/main/WiFiDatalogger/node-datalogging-server/)
-* [Google Apps script](https://github.com/tigoe/DataloggingExamples/tree/main/WiFiDatalogger/google-sheets-datalogger/)
+* [node.js server](node-datalogging-server/)
+* [Google Apps script](google-sheets-datalogger/)
 
 To make this work, you'll need:
 
@@ -33,6 +33,9 @@ This example uses a light and color sensor, the AMS [TCS34725](https://ams.com/t
 
 In addition to the sensor data, the client also sends  the Arduino's MAC address as a client ID.  The id allows the server to filter out requests from clients that it doesn't already know. Any server on a public address always gets random requests, so it's a good idea to filter out the ones you don't want. The Arduino's WiFi MAC address does the job  for this. 
 
+## Where Are You Logging the Data?
+The Arduino client is set up to log the data by default to a Google Apps Script, as explained [here](google-sheets-datalogger/). If you want to change it to send to a node.js script like the one shown [here](node-datalogging-server), then change the `server` and `route` variables to match the address of your server and the API route for posting. If you're running the node server via HTTP rather than via HTTPS, then change the `WiFiSSLClient` declaration to `WiFiClient` and change the `port` variable to the port number on which your node script is listening.
+
 ### Minimum Parameters To Log
 When you're setting up a microcontroller to be a sensor datalogging client, there are a few things to consider: 
 * What is the sensor data you're gathering?
@@ -46,7 +49,7 @@ The first question, what is being gathered, will depend on your particular case,
 #### When Is Each Set of Sensor Readings Taken?
 It's useful to attach a timestamp to each set of sensor readings, and it's useful to use some time standards. The simplest solution is to let the server time stamp each reading, ad the servers in this collection do. However, there may be reasons to time stamp locally by the microcontroller. If that is the case, then you want to attach a real-time clock to the microcontroller, or use a controller with one built-in, like the Nano 33 IoT or the MKR boards. The [RTCZero]((https://www.arduino.cc/reference/en/libraries/rtczero/)) library lets you access that realtime clock, and the WiFi libraries let you set the clock by making a network time server request, using the command `WiFi.getTime()`. For more on time in connected systems, see [this page](timestamps).
 
-### Where Was the Data Gathered?
+#### Where Was the Data Gathered?
 
 Unless you're using A GPS reader or some other machine-based way to determine your location, the simplest way is just to name the location in your data. Adding a parameter to your data with the location name is a good way to start.
 

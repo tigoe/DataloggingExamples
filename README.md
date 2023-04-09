@@ -4,9 +4,6 @@ There are several ways to save data from a sensor attached to a microcontroller.
 
 This site contains a number of data logging examples I've written for different workshops on the topic over the years. The most recent examples reflect my most up-to-date practices, of course. 
 
-## 2022: Notes on Timestamps
-Notes on [real-time clocks in Arduino and the JavaScript Date API](timestamps.md). These are useful in tracking time on a client or server. 
-
 ## 2021: WiFi HTTP and MQTT Dataloggers
 This [WiFi datalogging tutorial](WiFiDatalogger/), written for a personal project using Arduino Nano 33 IoT boards, shows you how to connect to a server to log data. It includes a node.js-based server script example, and a Google Sheets script that can take HTTP requests, along with two Arduino examples using the WiFi libraries and the ArduinoHttpClient library. There's also an example of how to do this with [MQTT](https://tigoe.github.io/DataloggingExamples/wifi-datalogger-mqtt.html).
 

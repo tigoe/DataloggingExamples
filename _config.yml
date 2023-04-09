@@ -2,7 +2,9 @@ title: Datalogging Examples
 description: Examples of Datalogging Using Microcontrollers
 google_analytics: 
 show_downloads: true
-theme: jekyll-theme-minimal
+codeurl: https://github.com/tigoe/DataloggingExamples/tree/main
+glitchliveurl: .glitch.me
+glitchremixurl: https://glitch.com/~
 
 gems:
   - jekyll-mentions

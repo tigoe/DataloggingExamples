@@ -45,7 +45,9 @@ This will download all the libraries you need to run the script in a subdirector
 ````sh
 node server-filewriter.js
 ````
-The server will run on port 8080 on your local machine. You can access it in a web browser
+The server will run on port 8080 on your local machine. You can access it in a web browser, go to `http://localhost:8080`.
+
+To access your local server from the Arduino client in this repository, you'll need the IP address of your computer. Change the `server` variable to the IP address of your comouter and change the `route` variable to `/data`. Change the `WiFiSSLClient` declaration to `WiFiClient` and change the `port` variable to `8080` which is the port on which this server is listening. 
 
 ## The Clients
 

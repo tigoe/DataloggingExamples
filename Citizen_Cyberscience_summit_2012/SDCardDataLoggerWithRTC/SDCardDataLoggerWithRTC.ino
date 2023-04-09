@@ -81,7 +81,7 @@ void loop()
   DateTime now = RTC.now();
 
 // if ten seconds have passed:
-  if (now.second() > lastReadTime + interval) {
+  if (abs(now.second() - lastReadTime) >= interval) {
     float temperature = bmp.readTemperature();
     float pressure = bmp.readPressure();
 

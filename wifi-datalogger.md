@@ -2,7 +2,7 @@
 
 The examples described here log data to a server via WiFi using a network-enabled microcontroller as a datalogging client. These examples should all work on the network-enabled MKR boards, along with the Nano 33 IoT and other SAMD-based boards which have network capability. They can likely work on Espressif-based boards (ESP32, ESP8266) with some modification.
 
-[This collection](https://github.com/tigoe/DataloggingExamples/tree/main/WiFiDatalogger) includes [ArduinoHttpClient](https://www.arduino.cc/reference/en/libraries/arduinohttpclient/) examples along with [node.js](https://nodejs.org/) server scripts. There are also instructions for how to log data to a Google Sheets spreadsheet using [Google Apps script](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app), thanks to Arnab Chakravarty. 
+[This collection](WiFiDatalogger/) includes [ArduinoHttpClient](https://www.arduino.cc/reference/en/libraries/arduinohttpclient/) examples along with a [node.js](https://nodejs.org/) server script. There are also instructions for how to log data to a Google Sheets spreadsheet using [Google Apps script](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app), thanks to Arnab Chakravarty. 
 
 To make this work, you'll need:
 
@@ -22,7 +22,7 @@ For other WiFi  and ArduinoHttpClient examples, see [this repository](https://ti
 
 ## Arduino HTTP Client for Logging
 
-The central app in this collection is the [DataLoggerHttpClientJSON](https://github.com/tigoe/DataloggingExamples/tree/main/WiFiDatalogger/DataLoggerHttpClientJSON) client. It is an Arduino-based client, written for the SAMD boards (MKR boards, Nano 33 IoT). It reads a sensor, saves the readings in a JSON object using the [Arduino_JSON](https://github.com/arduino-libraries/Arduino_JSON) library, and makes HTTPS requests to a server once every two minutes. 
+The main client app in this collection is the [DataLoggerHttpClientJSON](https://github.com/tigoe/DataloggingExamples/tree/main/WiFiDatalogger/DataLoggerHttpClientJSON) client. It is an Arduino-based client, written for the SAMD boards (MKR boards, Nano 33 IoT, Uno WiFi). It reads a sensor, saves the readings in a JSON object using the [Arduino_JSON](https://github.com/arduino-libraries/Arduino_JSON) library, and makes HTTPS requests to a server once every two minutes. 
 
 This example uses a light and color sensor, the AMS [TCS34725](https://ams.com/tcs34725), using [Adafruit's library](https://github.com/adafruit/Adafruit_TCS34725) for it. It sends the illuminance levels in lux, and the color temperature levels in degrees Kelvin. You can replace it with any sensor you want, however.  
 
@@ -39,7 +39,7 @@ When you're setting up a microcontroller to be a sensor datalogging client, ther
 The first question, what is being gathered, will depend on your particular case, of course. The examples given here were written to gather lighting data: illuminance and color temperature. Your characteristics will vary.
 
 #### When Is Each Set of Sensor Readings Taken?
-It's useful to attach a timestamp to each set of sensor readings, and it's useful to use some time standards. The simplest solution is to let the server time stamp each reading. However, there may be reasons to time stamp locally by the microcontroller. If that is the case, then you want to attach a real-time clock to the microcontroller, or use a controller with one built-in, like the Nano 33 IoT or the MKR boards. The [RTCZero]((https://www.arduino.cc/reference/en/libraries/rtczero/)) library lets you access that realtime clock, and the WiFi libraries let you set the clock by making a network time server request, using the command `WiFi.getTime()`. For more on time in connected systems, see [this page](timestamps).
+It's useful to attach a timestamp to each set of sensor readings, and it's useful to use some time standards. The simplest solution is to let the server time stamp each reading, ad the servers in this collection do. However, there may be reasons to time stamp locally by the microcontroller. If that is the case, then you want to attach a real-time clock to the microcontroller, or use a controller with one built-in, like the Nano 33 IoT or the MKR boards. The [RTCZero]((https://www.arduino.cc/reference/en/libraries/rtczero/)) library lets you access that realtime clock, and the WiFi libraries let you set the clock by making a network time server request, using the command `WiFi.getTime()`. For more on time in connected systems, see [this page](timestamps).
 
 ### Where Was the Data Gathered?
 

@@ -18,8 +18,7 @@ const server = express();
 // include body-parser:
 const bodyParser = require("body-parser");
 // set up an array of known users' unique IDs (uids):
-let knownClients = [
-"2462abb1e2ac"];
+let knownClients = ["2462abb1e2ac"];
 
 // include filesystem utilities:
 const fs = require("fs");
@@ -31,16 +30,18 @@ const readline = require("readline");
 
 // You'll read from and write to a file 
 // in the same directory as this script:
-var fileName = __dirname + "/data.txt";
+let fileName = __dirname + "/data.json";
 
 // serve static files from /public:
 server.use("/", express.static("public"));
 //  body parser for  application/json from the POST request:
 server.use(bodyParser.json());
+//  body parser for  URL encoded data:
+server.use(express.urlencoded({ extended: true }));
 
 // this runs after the server successfully starts:
 function serverStart() {
-  var port = this.address().port;
+  let port = this.address().port;
   console.log("Server listening on port " + port);
 }
 
@@ -54,28 +55,32 @@ function getData(request, response) {
     // quit this function:
     return;
   }
-  // get the dateTime from their request:
+  // get the starting and ending date from the request:
   let startDate = new Date(request.params.startTime);
   let endDate = new Date(request.params.endTime);
+  // set up a new array for the records to send:
   let recordsToSend = new Array();
+  
   // parameters for reading from the file:    
-  var fileParams = {
+  let fileParams = {
     input: fs.createReadStream(fileName),
     output: process.stdout,
     terminal: false
   };
   // make a file reader:
-  var file = readline.createInterface(fileParams);
+  let file = readline.createInterface(fileParams);
 
   // listen for new lines in the reading:
   file.on("line", getLineFromFile);
+  // listen for the end of the file, and send the result:
+  file.on("close", sendResponse);
 
   // new line handler:
   function getLineFromFile(line) {
     // make a JSON object from the line:
-    var thisRecord = JSON.parse(line);
+    let thisRecord = JSON.parse(line);
     // get the dateTime from the record:
-    var recordDate = new Date(thisRecord.timeStamp);
+    let recordDate = new Date(thisRecord.timestamp);
     console.log(thisRecord);
     // send all records from startDate to endDate:
     // if the date is between startDate and endDate,
@@ -85,9 +90,6 @@ function getData(request, response) {
       recordsToSend.push(thisRecord);
     }
   }
-
-  // listen for the end of the file, and send the result:
-  file.on("close", sendResponse);
 
   // file close handler:
   function sendResponse() {
@@ -102,9 +104,10 @@ function postData(request, response) {
   console.log("Got a POST request");
 
   let record = request.body;
+  // make sure this record is from a known client:
   if (knownClients.includes(record.uid)) {
     // add a timestamp to the record:
-    record.local_timestamp = new Date().toISOString();
+    record.timestamp = new Date().toISOString();
     // make a new line of text for the data file:
     let recordString = JSON.stringify(record) + "\n";
     // append the line to the file"

@@ -1,45 +1,40 @@
 # tigoe-datalogger
 
-A server that serves a webpage, its resources, and some data.
-There are two versions of the server here:
-* `server.js` saves incoming records in an array, and sends items from the array when requested. There is no persistent storage in this version.
-* `server-fileWriter.js` saves incoming records to a text file called `data.txt`, and sends items from the file when requested. This file exists even when the server is not running. 
+This is a server that serves a webpage, its resources, and some data. It saves incoming records to a text file called `data.json`, and sends items from the file when requested. This file exists even when the server is not running. 
+This server is written in [node.js](htps://nodejs.org). It has a RESTful API that accepts data formatted as a JSON string in the body of a POST request. The client should send sensor readings in a POST request with a JSON body to the server. The server writes the JSON string to a text file, as diagrammed in Figure 1.
 
-The server programs are written for HTTP, not HTTPS, but if they are served from glitch.com, they will operate as HTTPS. So the Arduino client is written as an HTTPS client too. If you prefer to run the servers on your own host and not use HTTPS, be sure to adjust the Arduino client accordingly.
+The server program is written for HTTP, not HTTPS, but if it is served from [glitch.com](https://glitch.com), it will run as HTTPS. So the Arduino client in this repository is written as an HTTPS client too. If you prefer to run the servers on your own host and not use HTTPS, be sure to adjust the Arduino client accordingly.
 
-To run `server-fileWriter.js`, change line 7 of the `package.json` file from 
-````
-"start": "node server.js"
-````
-to 
-````
-    "start": "node server-filewriter.js"
-````
+![system diagram of a wifi-datalogger, as described below.](images/wifi-datalogger.png)
+
+_Figure 1. System diagram of the node datalogging server_
+ 
+This server can be run on any host that can run node.js. You can see it running on [Glitch.com](https://glitch.com/) at [this link](https://glitch.com/edit/#!/tigoe-datalogger). It also includes a web-based client as a test example. 
+
+
 
 ## The API
 - GET /uid/records/startTime/endTime - returns all records from startTime to endTime.
-  * uid is a client ID, a 9-byte ID in hexadecimal format
-  * Datetime is in ISO8601 format (e.g. `2021-04-02T12:48:25Z`)
+  * uid is a client ID, a 6-byte ID in hexadecimal format
+  * startTime and endTime are in ISO8601 format (e.g. `2021-04-02T12:48:25Z`)
 
 - POST /data - accepts a JSON record and adds it to the array
 
-Expected JSON for the POST:
+The JSON data in the POST request should look like this:
+````js
+{
+   "uid": client ID (string),
+   "location": client physical location (string),
+   "lux": client lux reading (number),
+   "ct": client color temperature reading (number)
+}
 ````
-{ "uid": client ID, a 9-byte ID in hexadecimal format
-  "date": date in ISO8601 format}
-````
-You can add any other JSON elements you want to the record.
-The server does not read or write to anything but the date and the uid.
 
-You can generate an ISO string from the current time in JavaScript like so: 
-
-````
-new Date().toISOString();
-````
+You can also include any sensor characteristics that you want to add. The Arduino example in this collection sends light and color temperature levels in lux (`lux`) and degrees Kelvin (`ct`), respectively. The server doesn't check the names of the characteristics in the JSON data, so you can add anything you want. 
 
 ## The Clients
 
 There are two clients here, 
 
 * `index.html`, an HTML page in `/public` that sends and reads data. It reads data only from page load until the current time.
-* `DataLoggerHttpClientJSON.ino` - an Arduino client that reads from a light sensor and sends to the server 
+* `[DataLoggerHttpClientJSON.ino](../DataLoggerHttpClientJSON/DataLoggerHttpClientJSON.ino)` - an Arduino client that reads from a light sensor and sends to the server 

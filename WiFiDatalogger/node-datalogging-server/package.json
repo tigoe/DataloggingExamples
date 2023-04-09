@@ -4,7 +4,7 @@
   "description": "A server to receive and send JSON-based, timestamped data records",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server-filewriter.js"
   },
   "dependencies": {
     "express": "^4.17.1"

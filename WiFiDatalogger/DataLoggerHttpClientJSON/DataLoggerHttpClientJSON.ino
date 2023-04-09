@@ -1,11 +1,11 @@
 /*
-  Datalogger client - Crypto Chip
+  Datalogger client
 
   Connects to a server using HTTPS and uploads data.
-  Uses realtime clock on the SAMD21 (MKR boards and Nano 33 IoT) to
-  keep time.
-  
-  This client works with the servers found in this repository
+  Also handles HTTP error 302 redirects from Google Sheets scripts. 
+  For more on this, see https://developers.google.com/apps-script/guides/content#redirects
+
+  This client works with the google sheets datalogger found in this repository
 
   Works with MKR1010, MKR1000, Nano 33 IoT
   Uses the following libraries:
@@ -13,77 +13,84 @@
    http://librarymanager/All#WiFiNINA  // use this for MKR1010, Nano 33 IoT
    http://librarymanager/All#ArduinoHttpClient
    http://librarymanager/All#Arduino_JSON
-   http://librarymanager/All#RTCZero
    http://librarymanager/All#Adafruit_TCS34725 (for the sensor)
-   http://librarymanager/All#ECCX08 (for the crypto chip)
 
-  created 18 Feb 2019
-  modified 9 Jun 2021
+  In the arduino_secrets.h file:
+  #define SECRET_SSID ""           //  your network SSID (name)
+  #define SECRET_PASS ""           // your network password 
+  #define SECRET_DEPLOYMENT_ID  "" // your Google scripts deployment ID
+
+  created 23 May 2021
+  updated 8 Apr 2023
   by Tom Igoe
 */
 // include required libraries and config files
 #include <SPI.h>
 //#include <WiFi101.h>        // for MKR1000 modules
-#include <WiFiNINA.h>         // for MKR1010 modules and Nano 33 IoT modules
+#include <WiFiNINA.h>  // for MKR1010 modules
 #include <ArduinoHttpClient.h>
 // for simplifying JSON formatting:
 #include <Arduino_JSON.h>
-// realtime clock module on the SAMD21 processor:
-#include <RTCZero.h>
 // I2C and light sensor libraries:
 #include <Wire.h>
 #include <Adafruit_TCS34725.h>
-// include crypto chip library:
-#include <ECCX08.h>
 // network names and passwords:
 #include "arduino_secrets.h"
 
 // network socket to server. For HTTP instead of HTTPS,
 // use WiFiClient instead of WiFiSSLClient:
 WiFiSSLClient netSocket;
-// server name:
-const char server[] = SECRET_SERVER;
-// physical location of the client
-const char location[] = "NW_corner";
-
 // Server port. For HTTP instead of HTTPS, use 80 instead of 443:
 const int port = 443;
-// API route:
-String route = "/data";
-// set the content type:
-const char contentType[] = "application/json";
-
-// the HTTP client is global so you can use it in multiple functions below:
+// server name and API route:
+const char server[] = "script.google.com";
+String route = "/macros/s/DEPLOYMENT/exec";
+// Make a HTTP client:
 HttpClient client(netSocket, server, port);
-// initialize RTC:
-RTCZero rtc;
 // a JSON variable for the body of your requests:
-JSONVar body;
+JSONVar data;
 
-// request timestamp in minutes:
+// the content type to post data to server:
+const char contentType[] = "application/json";
+// set a location for the sensor:
+String location = "north window";
+
+// request timestamp in ms:
 long lastRequestTime = 0;
-// interval between requests, in minutes:
-int sendInterval = 1;
+// interval between requests, in ms:
+int sendInterval = 120 * 1000L;
 // initialize the light sensor:
-Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_700MS, TCS34725_GAIN_1X);
-// number of successful readings that have been sent:
-unsigned long readingCount = 0;
+Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_614MS, TCS34725_GAIN_60X);
 
 void setup() {
-  Serial.begin(9600);              // initialize serial communication
+  Serial.begin(9600);  // initialize serial communication
   // if serial monitor is not open, wait 3 seconds:
   if (!Serial) delay(3000);
-  // start the realtime clock:
-  rtc.begin();
-  // start the crypto chip and get its serial number
-  ECCX08.begin();
-  // add it to the body JSON for the requests to the server:
-  body["uid"] = ECCX08.serialNumber();
-  // add the location:
-  body["location"] = location;
+  // get the MAC address:
+  byte mac[6];
+  WiFi.macAddress(mac);
+  String macAddress = "";
+  for (int i = 5; i >= 0; i--) {
+    if (mac[i] < 16) {
+      macAddress += "0";
+    }
+    macAddress += String(mac[i], HEX);
+  }
+  // add it to the data JSON for the requests to the server:
+  data["uid"] = macAddress;
+  // add a location for the sensor:
+  data["location"] = location;
 
+  // update the Google scripts deployment ID. Only needed for Google apps script:
+  route.replace("DEPLOYMENT", SECRET_DEPLOYMENT_ID);
   // attempt to connect to network:
   connectToNetwork();
+  // read the sensor:
+  readSensor();
+  // print latest reading, for reference:
+  Serial.println(JSON.stringify(data));
+  // make a post request:
+  client.post(route, contentType, JSON.stringify(data));
 }
 
 void loop() {
@@ -92,42 +99,55 @@ void loop() {
     connectToNetwork();
   }
 
-  // If the client is not connected:
-  if (!client.connected()) {
-    // and the request interval has passed:
-    if (abs(rtc.getMinutes() - lastRequestTime) >= sendInterval) {
-      // read the sensor
-      readSensor();
-      // print latest reading, for reference:
-      Serial.println(JSON.stringify(body));
-      // make a post request:
-      client.post(route, contentType, JSON.stringify(body));
-      // take note of the time you make your request:
-      lastRequestTime = rtc.getMinutes();
-    }
-    // If there is a response available, read it:
-  }  else if (client.available()) {
+
+  // If the request interval has passed:
+  if (millis() - lastRequestTime >= sendInterval) {
+
+    // read the sensor
+    readSensor();
+    // print latest reading, for reference:
+    Serial.println(JSON.stringify(data));
+    // make a post request:
+    client.post(route, contentType, JSON.stringify(data));
+  }
+
+  // If there is a response available, read it:
+  if (client.available()) {
     // read the status code of the response
     int statusCode = client.responseStatusCode();
-    Serial.print("Status code: ");
-    Serial.println(statusCode);
-    // print out the response (this takes a bit longer):
-    //    String response = client.responseBody();
-    //    Serial.print("Response: " );
-    //    Serial.println(response);
 
-    // close the request:
-    client.stop();
-    // increment the reading count if you got a good response
-    if (statusCode == 200) {
-      readingCount++;
-    }
+    // (google sheets returns a 302 redirect, for more on this
+    // see https://developers.google.com/apps-script/guides/content#redirects
+    bool requestComplete = false;
+    // keep trying until you get a code 200:
+    do {
+      Serial.print("HTTP status code: ");
+      Serial.println(statusCode);
+      switch (statusCode) {
+        case 200:
+          lastRequestTime = millis();
+          requestComplete = true;
+          // close the request:
+          client.stop();
+          break;
+        case 302:
+          // make a redirect request:
+          statusCode = redirectRequest();
+          break;
+        default:
+          // unknown status code.
+          // If you need to respond to other codes, put them here.
+          // current code assumes anything other than a redirect completes the request:
+          requestComplete = true;
+          break;
+      }
+    } while (!requestComplete);
   }
 }
 
 /*
   readSensor. You could replace this with any sensor, as long as
-  you put the results into the body JSON object
+  you put the results into the data JSON object
 */
 void readSensor() {
   // get lux and color temperature from sensor:
@@ -136,59 +156,72 @@ void readSensor() {
   colorTemp = tcs.calculateColorTemperature_dn40(r, g, b, c);
   lux = tcs.calculateLux(r, g, b);
 
-  // update elements of request body JSON object:
-  body["timeStamp"] = getISOTimeString();
-  body["lux"] = lux;
-  body["ct"] = colorTemp;
-  body["readingCount"] = readingCount;
+  // update elements of request data JSON object:
+  data["lux"] = lux;
+  data["ct"] = colorTemp;
 }
 
-// gets an ISO8601-formatted string of the current time:
-String getISOTimeString() {
-  // ISO8601 string: yyyy-mm-ddThh:mm:ssZ
-  String timestamp = "20";
-  if (rtc.getYear() <= 9) timestamp += "0";
-  timestamp += rtc.getYear();
-  timestamp += "-";
-  if (rtc.getMonth() <= 9) timestamp += "0";
-  timestamp += rtc.getMonth();
-  timestamp += "-";
-  if (rtc.getDay() <= 9) timestamp += "0";
-  timestamp += rtc.getDay();
-  timestamp += "T";
-  if (rtc.getHours() <= 9) timestamp += "0";
-  timestamp += rtc.getHours();
-  timestamp += ":";
-  if (rtc.getMinutes() <= 9) timestamp += "0";
-  timestamp += rtc.getMinutes();
-  timestamp += ":";
-  if (rtc.getSeconds() <= 9) timestamp += "0";
-  timestamp += rtc.getSeconds();
-  timestamp += "Z";
-  return timestamp;
+/*
+  This function creates a new HTTPClient to get the result
+  from the google script redirect
+*/
+int redirectRequest() {
+  String tempServer;
+  String tempRoute;
+
+  // read the reesponse headers:
+  while (!client.endOfHeadersReached()) {
+    // if there's a header ready to be read, read it:
+    if (client.headerAvailable()) {
+      // if the name is "Location", it'll have the URL
+      // that you need to call to get the real response:
+      if (client.readHeaderName() == "Location") {
+        // get the value of the header:
+        String redirect = client.readHeaderValue();
+        // parse from the word "script" to "/macros"
+        // this will give you the server name:
+        int start = redirect.indexOf("script");
+        int end = redirect.lastIndexOf("/macros");
+        tempServer = redirect.substring(start, end);
+
+        // now parse from the word "/macros" to ">"
+        // this will give you the route:
+        start = redirect.indexOf("/macros");
+        end = redirect.lastIndexOf("\">");
+        tempRoute = redirect.substring(start, end);
+
+        // print out the response server and route:
+        Serial.print("Redirecting to: ");
+        Serial.print(tempServer);
+        Serial.println(tempRoute);
+      }
+    }
+  }
+  // make a new client to make the request for the result:
+  HttpClient redirectClient(netSocket, tempServer, port);
+  int tempResponseCode = 0;
+
+  // change from POST to GET, per Google's instructions:
+  redirectClient.get(tempRoute);
+  tempResponseCode = redirectClient.responseStatusCode();
+  // print out the response:
+  String response = redirectClient.responseBody();
+  Serial.print("Redirect body: ");
+  Serial.println(response);
+  redirectClient.stop();
+  return tempResponseCode;
 }
 
 void connectToNetwork() {
   // try to connect to the network:
-  while ( WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED) {
     Serial.println("Attempting to connect to: " + String(SECRET_SSID));
     //Connect to WPA / WPA2 network:
     WiFi.begin(SECRET_SSID, SECRET_PASS);
     delay(2000);
   }
-  Serial.println("connected.");
+  Serial.println("connected to: " + String(SECRET_SSID));
 
-  // set the time from the network:
-  unsigned long epoch;
-  do {
-    Serial.println("Attempting to get network time");
-    epoch = WiFi.getTime();
-    delay(2000);
-  } while (epoch == 0);
-
-  // set the RTC:
-  rtc.setEpoch(epoch);
-  Serial.println(getISOTimeString());
   IPAddress ip = WiFi.localIP();
   Serial.print(ip);
   Serial.print("  Signal Strength: ");

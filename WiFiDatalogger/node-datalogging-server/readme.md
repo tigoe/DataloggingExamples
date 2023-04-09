@@ -53,4 +53,4 @@ To access your local server from the Arduino client in this repository, you'll n
 
 There are two clients here:
 * `index.html`, an HTML page in `/public` that sends and reads data. It reads data only from page load until the current time.
-* `[DataLoggerHttpClientJSON.ino](../DataLoggerHttpClientJSON/DataLoggerHttpClientJSON.ino)` - an Arduino client that reads from a light sensor and sends to the server 
+* [DataLoggerHttpClientJSON.ino](../DataLoggerHttpClientJSON/DataLoggerHttpClientJSON.ino) - an Arduino client that reads from a light sensor and sends to the server 

@@ -5,7 +5,7 @@ The examples described here log data to a server via WiFi using a network-enable
 This collection includes an [ArduinoHttpClient](https://www.arduino.cc/reference/en/libraries/arduinohttpclient/) example along with a [node.js](https://nodejs.org/) server script. There are also instructions for how to log data to a Google Sheets spreadsheet using [Google Apps script](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app), thanks to Arnab Chakravarty. 
 
 The scripts:
-* [ArduinoHttpClient logger](https://github.com/tigoe/DataloggingExamples/tree/main/WiFiDatalogger/DataLoggerHttpClientJSON/)
+* [ArduinoHttpClient logger]({{site.codeurl}}/WiFiDatalogger/DataLoggerHttpClientJSON/)
 * [node.js server](node-datalogging-server/)
 * [Google Apps script](google-sheets-datalogger/)
 
@@ -27,7 +27,7 @@ For other WiFi  and ArduinoHttpClient examples, see [this repository](https://ti
 
 ## Arduino HTTP Client for Logging
 
-The main client app in this collection is the [DataLoggerHttpClientJSON](https://github.com/tigoe/DataloggingExamples/tree/main/WiFiDatalogger/DataLoggerHttpClientJSON) client. It is an Arduino-based client, written for the SAMD boards (MKR boards, Nano 33 IoT, Uno WiFi). It reads a sensor, saves the readings in a JSON object using the [Arduino_JSON](https://github.com/arduino-libraries/Arduino_JSON) library, and makes HTTPS requests to a server once every two minutes. 
+The main client app in this collection is the [DataLoggerHttpClientJSON]({{site.codeurl}}/WiFiDatalogger/DataLoggerHttpClientJSON) client. It is an Arduino-based client, written for the SAMD boards (MKR boards, Nano 33 IoT, Uno WiFi). It reads a sensor, saves the readings in a JSON object using the [Arduino_JSON](https://github.com/arduino-libraries/Arduino_JSON) library, and makes HTTPS requests to a server once every two minutes. 
 
 This example uses a light and color sensor, the AMS [TCS34725](https://ams.com/tcs34725), using [Adafruit's library](https://github.com/adafruit/Adafruit_TCS34725) for it. It sends the illuminance levels in lux, and the color temperature levels in degrees Kelvin. You can replace it with any sensor you want, however.  
 

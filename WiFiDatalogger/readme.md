@@ -2,14 +2,12 @@
 
 The examples described here log data to a server via WiFi using a network-enabled microcontroller as a datalogging client. These examples should all work on the network-enabled MKR boards, along with the Nano 33 IoT and other SAMD-based boards which have network capability. They can likely work on Espressif-based boards (ESP32, ESP8266) with some modification.
 
-[This collection](WiFiDatalogger/) includes [ArduinoHttpClient](https://www.arduino.cc/reference/en/libraries/arduinohttpclient/) examples along with a [node.js](https://nodejs.org/) server script. There are also instructions for how to log data to a Google Sheets spreadsheet using [Google Apps script](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app), thanks to Arnab Chakravarty. 
-
-Ahem
+This collection includes an [ArduinoHttpClient](https://www.arduino.cc/reference/en/libraries/arduinohttpclient/) example along with a [node.js](https://nodejs.org/) server script. There are also instructions for how to log data to a Google Sheets spreadsheet using [Google Apps script](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app), thanks to Arnab Chakravarty. 
 
 The scripts:
-* [ArduinoHttpClient logger]({{codeurl}}/WiFiDatalogger/DataLoggerHttpClientJSON/)
-* [node.js server]({{codeurl}}/WiFiDatalogger/node-datalogging-server/)
-* [Google Apps script]({{codeurl}}/WiFiDatalogger/google-sheets-datalogger/)
+* [ArduinoHttpClient logger](https://github.com/tigoe/DataloggingExamples/tree/main/WiFiDatalogger/DataLoggerHttpClientJSON/)
+* [node.js server](https://github.com/tigoe/DataloggingExamples/tree/main/WiFiDatalogger/node-datalogging-server/)
+* [Google Apps script](https://github.com/tigoe/DataloggingExamples/tree/main/WiFiDatalogger/google-sheets-datalogger/)
 
 To make this work, you'll need:
 
@@ -58,6 +56,6 @@ It's a good idea to always include a unique ID in your sensor readings so you ca
 
 You'll need to fill in an uid for your microcontroller for this to work. From any networked microcontroller, you can use the MAC address of the WiFi radio. You can see this in the Arduino example. 
 
-## Datalogging Server Applications
+## HTTP vs HTTPS
 
-The client above was originally to communicate with an HTTP/s server. Since the communications between server and client are all HTTP/s, the client can be adapted to communicate with other web-based apps with little change.  Linked here are two examples, [one written in node.js](/WiFiDatalogger/node-datalogging-server/readme.md), and the other written using Google Scripts and using a Google Sheets spreadsheet.
+The client above was originally to communicate with an HTTP/s server. Since the communications between server and client are all HTTP/s, the client can be adapted to communicate with other web-based apps with little change.

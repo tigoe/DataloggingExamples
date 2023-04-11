@@ -1,7 +1,7 @@
 
 # Arduino HTTP Client for Logging
 
-The main client app in this collection is the [DataLoggerHttpClientJSON]({{site.codeurl}}/WiFiDatalogger/DataLoggerHttpClientJSON) client. It is an Arduino-based client, written for the SAMD boards (MKR boards, Nano 33 IoT, Uno WiFi). It reads a sensor, saves the readings in a JSON object using the [Arduino_JSON](https://github.com/arduino-libraries/Arduino_JSON) library, and makes HTTPS requests to a server once every two minutes. 
+This Arduino-based client is written for the SAMD boards (MKR boards, Nano 33 IoT, Uno WiFi). It works with the [WiFiNINA](https://www.arduino.cc/reference/en/libraries/wifinina/) and [WiFi101](https://www.arduino.cc/reference/en/libraries/wifi101/) libraries, and can probably be adapted to other third-party WiFi libraries as well (not tested). It reads a [TCS34725 light sensor](https://ams.com/en/tcs34725) using [Adafruit's library for the sensor](https://github.com/adafruit/Adafruit_TCS34725), saves the readings in a JSON object using the [Arduino_JSON](https://github.com/arduino-libraries/Arduino_JSON) library, and makes HTTPS requests to a server once every two minutes. 
 
 ## The Code
 

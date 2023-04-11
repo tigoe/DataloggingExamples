@@ -5,7 +5,7 @@ The examples described here log data to a server via WiFi using a network-enable
 This collection includes an [ArduinoHttpClient](https://www.arduino.cc/reference/en/libraries/arduinohttpclient/) example along with a [node.js](https://nodejs.org/) server script. There are also instructions for how to log data to a Google Sheets spreadsheet using [Google Apps script](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app), thanks to Arnab Chakravarty. 
 
 The scripts:
-* [ArduinoHttpClient logger]({{site.codeurl}}/WiFiDatalogger/DataLoggerHttpClientJSON/)
+* [ArduinoHttpClient logger](datalogger-circuit)
 * [node.js server](node-datalogging-server/)
 * [Google Apps script](google-sheets-datalogger/)
 
@@ -24,34 +24,6 @@ Background material you might want to review beforehand:
 * Read [A Gentle Introduction to HTTP](https://itp.nyu.edu/networks/explanations/a-gentle-introduction-to-http/) by Maria del pilar Gomez Ruiz to get an idea of how web clients and servers talk to each other. 
 
 For other WiFi  and ArduinoHttpClient examples, see [this repository](https://tigoe.github.io/Wifi101_examples/). For other Node examples, see [this repository](https://tigoe.github.io/NodeExamples/).
-
-## Arduino HTTP Client for Logging
-
-The main client app in this collection is the [DataLoggerHttpClientJSON]({{site.codeurl}}/WiFiDatalogger/DataLoggerHttpClientJSON) client. It is an Arduino-based client, written for the SAMD boards (MKR boards, Nano 33 IoT, Uno WiFi). It reads a sensor, saves the readings in a JSON object using the [Arduino_JSON](https://github.com/arduino-libraries/Arduino_JSON) library, and makes HTTPS requests to a server once every two minutes. 
-
-### The Circuit
-
-This example uses a light and color sensor, the AMS [TCS34725](https://ams.com/tcs34725), using [Adafruit's library](https://github.com/adafruit/Adafruit_TCS34725) for it. It sends the illuminance levels in lux, and the color temperature levels in degrees Kelvin. You can replace it with any sensor you want, however.  
-
-![Breadboard view of the Nano 33 IoT and TCS34725 sensor, as described below.](../images/LightLogger_bb.png)
-
-_Figure 1. Breadboard view of the Nano 33 IoT and TCS34725 sensor._
-
-![Schematic view of the Nano 33 IoT and TCS34725 sensor, as described below.](../images/LightLogger_schem.png)
-
-_Figure 2. Schematic view of the Nano 33 IoT and TCS34725 sensor._
-
-Figures 1 and 2 show breadboard and schematic views of the circuit. The Nano's pins are numbered in a U shape from top left. The TCS34725's pins are on the left side of the board, and numbered from top to bottom. The Nano's 3.3V (physical pin 2) and ground (physical pin 14) are connected to the side bus rows of the breadboard in Figure 1, providing power and ground for the sensor as well (pins 7 and 6 on the sensor, respectively). The sensor's LED pin (pin 1) is also connected to ground. The SDA and SCL pins of the Nano (pins 8 and 9,respectively) are connected to the sensor's SDA and SCL pins (pins 3 and 4,respectively). The connections are detailed in Table 1 below. 
-
-| Nano physical pin no.| Function | TCS34725 Physical pin | Function |
-| :------------------: |:--------:| :--------------------:|:--------:|
-| 2                    | 3.3V     | 7                     | Vin      |
-| 8                    | SDA      | 3                     | SDA      |
-| 9                    | SCL      | 4                     | SCL      |
-| 14                   | GND      | 6                     | GND      |
-| 14                   | GND      | 1                     | LED      |
-
-In addition to the sensor data, the client also sends  the Arduino's MAC address as a client ID.  The id allows the server to filter out requests from clients that it doesn't already know. Any server on a public address always gets random requests, so it's a good idea to filter out the ones you don't want. The Arduino's WiFi MAC address does the job  for this. 
 
 ## Where Are You Logging the Data?
 The Arduino client is set up to log the data by default to a Google Apps Script, as explained [here](google-sheets-datalogger/). If you want to change it to send to a node.js script like the one shown [here](node-datalogging-server), then change the `server` and `route` variables to match the address of your server and the API route for posting. If you're running the node server via HTTP rather than via HTTPS, then change the `WiFiSSLClient` declaration to `WiFiClient` and change the `port` variable to the port number on which your node script is listening.
@@ -79,6 +51,4 @@ It's a good idea to always include a unique ID in your sensor readings so you ca
 
 You'll need to fill in an uid for your microcontroller for this to work. From any networked microcontroller, you can use the MAC address of the WiFi radio. You can see this in the Arduino example. 
 
-## HTTP vs HTTPS
 
-The client above was originally to communicate with an HTTP/s server. Since the communications between server and client are all HTTP/s, the client can be adapted to communicate with other web-based apps with little change.

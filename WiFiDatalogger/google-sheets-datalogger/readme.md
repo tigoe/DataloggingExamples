@@ -1,7 +1,7 @@
 
 # Google Sheets Datalogger
 
-The [Google Apps script]({{site.codeurl}}/WiFiDatalogger/google-sheets/datalogger/datalogger.gs) in this repository allows you to save data to a Google Sheets spreadsheet via HTTP. Arnab Chakravarty has a [tutorial on how it works](https://github.com/AbolTaabol/Arduino-GoogleSheet_Logger). For more background on Google Apps scripts, see [this link](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app). For reading on the web functions `doGet()` and `doPost()`, which are the main functions of this example, see [this link](https://developers.google.com/apps-script/guides/web).
+The [Google Apps script]({{site.codeurl}}/WiFiDatalogger/google-sheets-datalogger/datalogger.gs) in this repository allows you to save data to a Google Sheets spreadsheet via HTTP. Arnab Chakravarty has a [tutorial on how it works](https://github.com/AbolTaabol/Arduino-GoogleSheet_Logger). For more background on Google Apps scripts, see [this link](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app). For reading on the web functions `doGet()` and `doPost()`, which are the main functions of this example, see [this link](https://developers.google.com/apps-script/guides/web).
 
 The Arduino program which acts as a client to this script is at [this link]({{site.codeurl}}/WiFiDatalogger/DataLoggerHttpClientJSON).
 

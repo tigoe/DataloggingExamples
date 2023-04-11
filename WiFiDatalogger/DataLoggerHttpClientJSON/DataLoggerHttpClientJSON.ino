@@ -60,7 +60,7 @@ long lastRequestTime = 0;
 // interval between requests, in ms:
 int sendInterval = 120 * 1000L;
 // initialize the light sensor:
-Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_614MS, TCS34725_GAIN_60X);
+Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_300MS, TCS34725_GAIN_1X);
 
 void setup() {
   Serial.begin(9600);  // initialize serial communication
@@ -80,7 +80,7 @@ void setup() {
   data["uid"] = macAddress;
   // add a location for the sensor:
   data["location"] = location;
-
+Serial.println(macAddress);
   // update the Google scripts deployment ID. Only needed for Google apps script:
   route.replace("DEPLOYMENT", SECRET_DEPLOYMENT_ID);
   // attempt to connect to network:
@@ -155,7 +155,6 @@ void readSensor() {
   tcs.getRawData(&r, &g, &b, &c);
   colorTemp = tcs.calculateColorTemperature_dn40(r, g, b, c);
   lux = tcs.calculateLux(r, g, b);
-
   // update elements of request data JSON object:
   data["lux"] = lux;
   data["ct"] = colorTemp;

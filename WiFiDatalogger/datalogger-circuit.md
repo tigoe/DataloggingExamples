@@ -9,7 +9,7 @@ The Arduino sketch for this circuit can be found at [this link]({{site.codeurl}}
 
 ## The Circuit
 
-This example uses a light and color sensor, the AMS [TCS34725](https://ams.com/tcs34725), using [Adafruit's library](https://github.com/adafruit/Adafruit_TCS34725) for it. It sends the illuminance levels in lux, and the color temperature levels in degrees Kelvin. You can replace it with any sensor you want, however.  
+This example uses a light and color sensor, the AMS [TCS34725](https://ams.com/tcs34725), using [Adafruit's library](https://github.com/adafruit/Adafruit_TCS34725) for it. It sends the illuminance levels in lux, and the color temperature levels in degrees Kelvin.
 
 ![Breadboard view of the Nano 33 IoT and TCS34725 sensor, as described below.](../images/LightLogger_bb.png)
 

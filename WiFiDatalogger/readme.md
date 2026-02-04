@@ -15,7 +15,6 @@ To make this work, you'll need:
 * A WiFi-connected Arduino like the Nano 33 IoT, MKR 1010, or MKR1000. 
 * An input sensor (pushbutton or knob is fine)
 * To be comfortable with programming in JavaScript in some [node.js](https://nodejs.org)
-* a free [Glitch.com](https://www.glitch.com) account (for some examples)
 
 Background material you might want to review beforehand:
 
